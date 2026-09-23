@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#F1F2ED" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14150F" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="TED聞く">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-180.png">
+<title>Inside the Mind of a Master Procrastinator</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Archivo:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#F1F2ED; --surface:#FBFCF8; --sunk:#E7E9DF;
+  --ink:#16180F; --ink-2:#5E6356; --ink-3:#8E9384;
+  --rule:#DBDDD1;
+  --mark:#CBE84F; --mark-ink:#16180F; --mark-soft:#EAF4B6;
+  --loop:#D8552F; --loop-soft:#F7E2D9;
+  --ui:"Archivo",system-ui,sans-serif;
+  --en:"Newsreader",Georgia,serif;
+  --jp:"Zen Kaku Gothic New","Hiragino Sans",sans-serif;
+  color-scheme:light;
+}
+[hidden]{display:none !important}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --ground:#14150F; --surface:#1D1F16; --sunk:#23261A;
+  --ink:#EAECE0; --ink-2:#9BA08C; --ink-3:#6E7362;
+  --rule:#2E3126;
+  --mark:#B4D12F; --mark-ink:#14150F; --mark-soft:#363B1C;
+  --loop:#F0724B; --loop-soft:#3B2318;
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#14150F; --surface:#1D1F16; --sunk:#23261A;
+  --ink:#EAECE0; --ink-2:#9BA08C; --ink-3:#6E7362;
+  --rule:#2E3126;
+  --mark:#B4D12F; --mark-ink:#14150F; --mark-soft:#363B1C;
+  --loop:#F0724B; --loop-soft:#3B2318;
+}
+html,body{height:100%}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:var(--ui); display:flex; flex-direction:column;
+  overscroll-behavior:none;
+  /* iPhone のノッチとホームバーに被らないように */
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box}
+button{font:inherit; color:inherit; background:none; border:none; cursor:pointer}
+:focus-visible{outline:2px solid var(--loop); outline-offset:2px; border-radius:4px}
+
+/* ── 上 ───────────────────────────── */
+header{
+  flex:none; background:var(--surface); border-bottom:1px solid var(--rule);
+  padding:10px 16px 8px; display:flex; flex-direction:column; gap:8px;
+}
+.kicker{
+  display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;
+  font-size:11px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3);
+}
+.kicker b{font-weight:600; letter-spacing:.06em; color:var(--ink-2)}
+.kicker a{color:inherit; text-decoration:underline; text-underline-offset:2px; text-transform:none; letter-spacing:.02em}
+.off{margin-left:auto; text-transform:none; letter-spacing:.02em; font-weight:600}
+.off.ok{color:var(--ink-2)}
+.off.ok::before{content:""; display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--mark); margin-right:5px; vertical-align:1px}
+.rows{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+.lbl{font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); flex:none}
+.chips{display:flex; gap:4px; flex-wrap:wrap}
+.segtitle{font-size:11.5px; color:var(--ink-2); letter-spacing:.01em}
+.chip{
+  font-size:12px; font-weight:500; padding:5px 10px; border-radius:999px;
+  border:1px solid var(--rule); background:var(--ground); color:var(--ink-2);
+  font-variant-numeric:tabular-nums; line-height:1.1;
+}
+.chip[aria-pressed="true"]{background:var(--mark); border-color:var(--mark); color:var(--mark-ink); font-weight:600}
+
+/* ── 本文 ─────────────────────────── */
+main{flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:6px 0 10px}
+.line{
+  display:grid; grid-template-columns:30px 1fr; gap:10px; align-items:start;
+  width:100%; text-align:left; padding:9px 16px 9px 10px;
+  border-left:3px solid transparent; border-bottom:1px solid var(--rule);
+}
+.line:last-child{border-bottom:none}
+.n{
+  font-size:10px; font-weight:600; color:var(--ink-3); font-variant-numeric:tabular-nums;
+  padding-top:5px; text-align:right; letter-spacing:.02em;
+}
+.dur{display:block; font-weight:400; color:var(--ink-3); opacity:.75; font-size:9px; margin-top:2px}
+.body{min-width:0}
+.en,.ja{display:block}
+.line [hidden]{display:none !important}
+.en{font-family:var(--en); font-size:18px; line-height:1.5; letter-spacing:.005em}
+.ja{font-family:var(--jp); font-size:13px; line-height:1.65; color:var(--ink-2); margin-top:4px}
+.line.done .en,.line.done .ja{color:var(--ink-3)}
+.line.now{background:var(--mark-soft); border-left-color:var(--mark)}
+.line.now .en{color:var(--ink); font-weight:500}
+.line.now .n{color:var(--ink-2)}
+.line.mark-a,.line.mark-b{border-left-color:var(--loop)}
+.tag{
+  display:inline-block; font-size:9px; font-weight:700; letter-spacing:.08em;
+  background:var(--loop); color:#fff; border-radius:3px; padding:1px 4px; margin-right:6px;
+  vertical-align:2px;
+}
+.line.inrange{background:var(--loop-soft)}
+.line.inrange.now{background:var(--mark-soft)}
+.veil{filter:blur(4.5px); opacity:.55; user-select:none}
+
+/* ── 下 ───────────────────────────── */
+footer{
+  flex:none; background:var(--surface); border-top:1px solid var(--rule);
+  padding:8px 16px 10px; display:flex; flex-direction:column; gap:8px;
+}
+.hint{font-size:11px; color:var(--ink-3); min-height:14px; line-height:1.3}
+.hint strong{color:var(--loop); font-weight:600}
+.seekrow{display:flex; align-items:center; gap:10px}
+.t{font-size:11px; color:var(--ink-2); font-variant-numeric:tabular-nums; flex:none; letter-spacing:.02em}
+input[type=range]{flex:1; min-width:0; accent-color:var(--mark); height:20px}
+.transport{display:flex; align-items:center; gap:8px}
+.tbtn{
+  width:40px; height:40px; border-radius:50%; border:1px solid var(--rule);
+  background:var(--ground); display:grid; place-items:center; flex:none;
+}
+.tbtn svg{width:17px; height:17px; fill:var(--ink)}
+#play{width:50px; height:50px; background:var(--ink); border-color:var(--ink)}
+#play svg{width:20px; height:20px; fill:var(--ground)}
+.spacer{flex:1}
+.settings{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+.settings .chip{padding:4px 9px; font-size:11px}
+#reveal[aria-pressed="true"]{background:var(--loop); border-color:var(--loop); color:#fff}
+@media (max-width:420px){ .en{font-size:17px} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kicker"><b>Tim Urban</b><span>TED 2016 &middot; 162 wpm</span><a class="src" href="https://www.ted.com/talks/tim_urban_inside_the_mind_of_a_master_procrastinator" target="_blank" rel="noopener">出典 CC BY-NC-ND 4.0</a><span class="off" id="offline"></span></div>
+  <div class="rows">
+    <span class="lbl">区間</span>
+    <div class="chips" id="segs"></div>
+    <span class="segtitle" id="segtitle"></span>
+  </div>
+  <div class="rows">
+    <span class="lbl">字幕</span>
+    <div class="chips" id="subs">
+      <button class="chip" data-v="off">なし</button>
+      <button class="chip" data-v="en">英</button>
+      <button class="chip" data-v="ja">日</button>
+      <button class="chip" data-v="both">英日</button>
+    </div>
+  </div>
+</header>
+
+<main id="main"></main>
+
+<footer>
+  <div class="hint" id="hint"></div>
+  <div class="seekrow">
+    <span class="t" id="tnow">0:00</span>
+    <input type="range" id="seek" min="0" max="1000" value="0" step="1" aria-label="再生位置">
+    <span class="t" id="tend">0:00</span>
+  </div>
+  <div class="transport">
+    <button class="tbtn" id="prev" aria-label="前の文"><svg viewBox="0 0 24 24"><path d="M7 6h2v12H7zm3 6l8-6v12z"/></svg></button>
+    <button class="tbtn" id="play" aria-label="再生"><svg viewBox="0 0 24 24" id="playicon"><path d="M8 5v14l11-7z"/></svg></button>
+    <button class="tbtn" id="next" aria-label="次の文"><svg viewBox="0 0 24 24"><path d="M15 6h2v12h-2zM6 6l8 6-8 6z"/></svg></button>
+    <span class="spacer"></span>
+    <button class="chip" id="reveal" aria-pressed="false">今の文を見る</button>
+  </div>
+  <div class="settings">
+    <span class="lbl">繰り返し</span>
+    <div class="chips" id="loops">
+      <button class="chip" data-v="off">流す</button>
+      <button class="chip" data-v="one">1文</button>
+      <button class="chip" data-v="ab">A–B</button>
+      <button class="chip" data-v="seg">区間</button>
+    </div>
+  </div>
+  <div class="settings">
+    <span class="lbl">速さ</span>
+    <div class="chips" id="rates">
+      <button class="chip" data-v="0.7">0.7×</button>
+      <button class="chip" data-v="0.85">0.85×</button>
+      <button class="chip" data-v="1">1×</button>
+    </div>
+    <span class="lbl">間</span>
+    <div class="chips" id="gaps">
+      <button class="chip" data-v="0">なし</button>
+      <button class="chip" data-v="1.5">1.5秒</button>
+      <button class="chip" data-v="3">3秒</button>
+    </div>
+  </div>
+</footer>
+
+<script>
+const DATA = __DATA__;
+
+const 保存キー = "ted-tim-urban-v1";
+let st = {seg:1, subs:"en", loop:"off", rate:1, gap:0, a:null, b:null};
+try{ const r = localStorage.getItem(保存キー); if(r) Object.assign(st, JSON.parse(r)); }catch(e){}
+st.a = null; st.b = null;
+
+const audio = new Audio();
+audio.preload = "metadata";
+let 文 = [], idx = -1, ループ中 = false, 見せる = false, 手で動かした = 0, つまみ中 = false;
+// 1文ループで繰り返している文。idx（今の文）は境目の直前に次へ進むので、ループの的には使えない
+let 固定 = -1;
+
+const $ = s => document.querySelector(s);
+const main = $("#main"), hint = $("#hint"), seek = $("#seek");
+
+function 秒表示(x){ x = Math.max(0, x||0); const m = Math.floor(x/60), s = Math.floor(x%60); return m + ":" + String(s).padStart(2,"0"); }
+function しまう(){ try{ localStorage.setItem(保存キー, JSON.stringify({seg:st.seg, subs:st.subs, loop:st.loop, rate:st.rate, gap:st.gap})); }catch(e){} }
+
+/* ── 組み立て ───────────────────── */
+(function 区間ボタン(){
+  const box = $("#segs");
+  for(const k of Object.keys(DATA)){
+    const b = document.createElement("button");
+    b.className = "chip"; b.dataset.v = k; b.textContent = k;
+    box.appendChild(b);
+  }
+})();
+
+function 描く(){
+  文 = DATA[st.seg].文;
+  main.innerHTML = "";
+  文.forEach((s, i) => {
+    const row = document.createElement("button");
+    row.className = "line"; row.dataset.i = i;
+    row.innerHTML =
+      '<span class="n">' + (i+1) + '<span class="dur">' + (s.e - s.s).toFixed(1) + 's</span></span>' +
+      '<span class="body">' +
+        '<span class="en"></span>' +
+        '<span class="ja"></span>' +
+      '</span>';
+    row.querySelector(".en").textContent = s.en;
+    row.querySelector(".ja").textContent = s.ja;
+    main.appendChild(row);
+  });
+  idx = -1; 固定 = -1;
+  audio.src = "audio/" + st.seg + ".mp3";
+  audio.playbackRate = st.rate;
+  st.a = st.b = null;
+  字幕を当てる(); 印を塗る(); 助言(); ボタンを揃える();
+  $("#tend").textContent = 秒表示(文[文.length-1].e);
+  $("#segtitle").textContent = DATA[st.seg].見出し;
+  if("mediaSession" in navigator){
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: "区間" + st.seg + "｜" + DATA[st.seg].見出し,
+      artist: "Tim Urban", album: "Inside the Mind of a Master Procrastinator"
+    });
+  }
+}
+
+function 字幕を当てる(){
+  const 英 = st.subs === "en" || st.subs === "both";
+  const 日 = st.subs === "ja" || st.subs === "both";
+  main.querySelectorAll(".line").forEach((row, i) => {
+    // 英文は「なし」でも場所は取らせる。行の長さで文の長さの見当がつく方が書き取りに効く
+    row.querySelector(".en").classList.toggle("veil", !英 && !(見せる && i === idx));
+    row.querySelector(".ja").hidden = !日;
+  });
+}
+
+function 印を塗る(){
+  const a = st.a, b = st.b;
+  main.querySelectorAll(".line").forEach((row, i) => {
+    row.classList.toggle("now", i === idx);
+    row.classList.toggle("done", idx >= 0 && i < idx);
+    row.classList.toggle("mark-a", a === i);
+    row.classList.toggle("mark-b", b === i);
+    row.classList.toggle("inrange", a !== null && b !== null && i >= a && i <= b);
+    const old = row.querySelector(".tag"); if(old) old.remove();
+    if(a === i || b === i){
+      const t = document.createElement("span");
+      t.className = "tag"; t.textContent = (a === i ? "A" : "B");
+      row.querySelector(".body").prepend(t);
+    }
+  });
+}
+
+function ボタンを揃える(){
+  const 当てる = (id, v) => document.querySelectorAll("#" + id + " .chip").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v == v)));
+  当てる("segs", st.seg); 当てる("subs", st.subs); 当てる("loops", st.loop);
+  当てる("rates", st.rate); 当てる("gaps", st.gap);
+  $("#reveal").setAttribute("aria-pressed", String(見せる));
+}
+
+function 助言(){
+  if(st.loop === "ab"){
+    if(st.a === null) hint.innerHTML = "繰り返したい範囲の<strong>最初の文</strong>をタップ";
+    else if(st.b === null) hint.innerHTML = "次に<strong>最後の文</strong>をタップ（同じ文でもいい）";
+    else hint.innerHTML = (st.a+1) + "〜" + (st.b+1) + " を繰り返し中。もう一度タップすると引き直せる";
+  } else if(st.loop === "one"){ hint.textContent = "今の1文を繰り返す。文をタップするとそこへ移る";
+  } else if(st.loop === "seg"){ hint.textContent = "区間の終わりまで行ったら頭に戻る";
+  } else { hint.textContent = "文をタップするとそこから再生。字幕なしで聞いて「今の文」で答え合わせ"; }
+}
+
+/* ── 動き ───────────────────────── */
+function 今どこ(t){
+  for(let i = 文.length - 1; i >= 0; i--) if(t >= 文[i].s - 0.05) return i;
+  return 0;   // 冒頭の拍手や間はこれから読む文に含める
+}
+
+function 飛ぶ(秒, 鳴らす){
+  audio.currentTime = Math.max(0, 秒);
+  if(鳴らす !== false) audio.play().catch(()=>{});
+}
+
+function 戻す(秒){
+  if(ループ中) return;
+  ループ中 = true;
+  if(st.gap > 0){
+    audio.pause();
+    setTimeout(() => { audio.currentTime = Math.max(0, 秒); audio.play().catch(()=>{}); ループ中 = false; }, st.gap * 1000);
+  } else {
+    audio.currentTime = Math.max(0, 秒);
+    ループ中 = false;
+  }
+}
+
+// ループの境目を越えたら戻す。rAF は iPhone で画面を消すと止まるので、
+// timeupdate と 0.1 秒のタイマーからも呼ぶ（どれか1つが生きていれば戻せる）
+function 境目を見る(){
+  if(ループ中 || audio.paused || !文.length) return;
+  const t = audio.currentTime;
+  if(st.loop === "one"){
+    if(固定 < 0) 固定 = 今どこ(t);
+    if(t >= 文[固定].e - 0.03 || t < 文[固定].s - 0.3) 戻す(文[固定].s);
+  } else if(st.loop === "ab" && st.a !== null && st.b !== null){
+    if(t >= 文[st.b].e - 0.03 || t < 文[st.a].s - 0.3) 戻す(文[st.a].s);
+  }
+}
+audio.addEventListener("timeupdate", 境目を見る);
+setInterval(境目を見る, 100);
+
+function 拍(){
+  const t = audio.currentTime;
+  if(!つまみ中){
+    const 尻 = 文[文.length-1].e;
+    seek.value = Math.round(Math.min(1, t / 尻) * 1000);
+    $("#tnow").textContent = 秒表示(t);
+  }
+  境目を見る();
+  const 新 = (st.loop === "one" && 固定 >= 0) ? 固定 : 今どこ(audio.currentTime);
+  if(新 !== idx){
+    idx = 新; 見せる = false;
+    印を塗る(); 字幕を当てる(); ボタンを揃える();
+    const row = main.querySelector('.line[data-i="' + idx + '"]');
+    if(row && Date.now() - 手で動かした > 5000) row.scrollIntoView({block:"center", behavior:"smooth"});
+  }
+  requestAnimationFrame(拍);
+}
+requestAnimationFrame(拍);
+
+audio.addEventListener("ended", () => {
+  if(st.loop === "seg"){ 戻す(0); if(st.gap === 0) audio.play().catch(()=>{}); }
+  else 再生表示(false);
+});
+audio.addEventListener("play", () => { 再生表示(true); 眠らせない(); });
+audio.addEventListener("pause", () => { if(!ループ中) 再生表示(false); });
+
+function 再生表示(鳴ってる){
+  $("#playicon").innerHTML = 鳴ってる
+    ? '<path d="M6 5h4v14H6zm8 0h4v14h-4z"/>'
+    : '<path d="M8 5v14l11-7z"/>';
+  $("#play").setAttribute("aria-label", 鳴ってる ? "一時停止" : "再生");
+}
+
+let 錠 = null;
+async function 眠らせない(){
+  try{ if("wakeLock" in navigator && !錠) 錠 = await navigator.wakeLock.request("screen"); }catch(e){}
+}
+document.addEventListener("visibilitychange", () => { if(document.visibilityState === "visible" && !audio.paused) 眠らせない(); });
+
+/* ── 操作 ───────────────────────── */
+main.addEventListener("click", e => {
+  const row = e.target.closest(".line"); if(!row) return;
+  const i = +row.dataset.i;
+  if(st.loop === "ab"){
+    if(st.a === null || st.b !== null){ st.a = i; st.b = null; 飛ぶ(文[i].s); }
+    else if(i >= st.a){ st.b = i; 飛ぶ(文[st.a].s); }
+    else { st.a = i; 飛ぶ(文[i].s); }
+    印を塗る(); 助言();
+  } else {
+    固定 = i;
+    飛ぶ(文[i].s);
+  }
+});
+
+$("#play").addEventListener("click", () => { if(audio.paused) audio.play().catch(()=>{}); else audio.pause(); });
+$("#prev").addEventListener("click", () => {
+  const t = audio.currentTime;
+  if(st.loop === "one" && 固定 >= 0) idx = 固定;
+  const 頭に戻すか = idx >= 0 && t - 文[idx].s > 1.2;
+  const j = 頭に戻すか ? idx : Math.max(0, idx - 1);
+  固定 = j;
+  飛ぶ(文[j].s);
+});
+$("#next").addEventListener("click", () => { const j = Math.min(文.length - 1, idx + 1); 固定 = j; 飛ぶ(文[j].s); });
+
+seek.addEventListener("pointerdown", () => { つまみ中 = true; });
+seek.addEventListener("change", () => {
+  つまみ中 = false;
+  const 先 = (seek.value / 1000) * 文[文.length-1].e;
+  固定 = 今どこ(先);
+  飛ぶ(先, !audio.paused);
+});
+seek.addEventListener("input", () => { $("#tnow").textContent = 秒表示((seek.value / 1000) * 文[文.length-1].e); });
+
+main.addEventListener("scroll", () => { 手で動かした = Date.now(); }, {passive:true});
+
+function 束ねる(id, 効く){
+  document.getElementById(id).addEventListener("click", e => {
+    const b = e.target.closest(".chip"); if(!b) return;
+    効く(b.dataset.v); ボタンを揃える(); しまう();
+  });
+}
+束ねる("segs",  v => { const 鳴ってた = !audio.paused; st.seg = +v; 描く(); if(鳴ってた) audio.play().catch(()=>{}); });
+束ねる("subs",  v => { st.subs = v; 字幕を当てる(); });
+束ねる("loops", v => { st.loop = v; st.a = st.b = null; 固定 = Math.max(0, idx); 印を塗る(); 助言(); });
+束ねる("rates", v => { st.rate = +v; audio.playbackRate = st.rate; });
+束ねる("gaps",  v => { st.gap = +v; });
+
+$("#reveal").addEventListener("click", () => { 見せる = !見せる; 字幕を当てる(); ボタンを揃える(); });
+
+document.addEventListener("keydown", e => {
+  if(e.target.tagName === "INPUT") return;
+  if(e.code === "Space"){ e.preventDefault(); $("#play").click(); }
+  if(e.code === "ArrowLeft"){ e.preventDefault(); $("#prev").click(); }
+  if(e.code === "ArrowRight"){ e.preventDefault(); $("#next").click(); }
+});
+
+描く(); 再生表示(false);
+
+/* ── 圏外で使う準備 ─────────────────── */
+// sw.js のキャッシュ名と揃える
+const キャッシュ名 = "ted-tim-urban-v2";
+const 音源一覧 = Object.keys(DATA).map(k => new URL("audio/" + k + ".mp3", location.href).href);
+
+async function 保存状況(){
+  const el = $("#offline");
+  if(!("caches" in window)){ el.textContent = ""; return 0; }
+  try{
+    const c = await caches.open(キャッシュ名);
+    let n = 0;
+    for(const u of 音源一覧) if(await c.match(u)) n++;
+    el.textContent = n >= 音源一覧.length ? "圏外OK" : "保存中 " + n + "/" + 音源一覧.length;
+    el.classList.toggle("ok", n >= 音源一覧.length);
+    return n;
+  }catch(e){ el.textContent = ""; return 0; }
+}
+
+async function 貯める(){
+  if(!("caches" in window)) return;
+  try{
+    const c = await caches.open(キャッシュ名);
+    for(const u of 音源一覧){
+      if(await c.match(u)) continue;
+      try{ const r = await fetch(u); if(r.ok){ await c.put(u, r); 保存状況(); } }catch(e){}
+    }
+  }catch(e){}
+  保存状況();
+}
+
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.register("sw.js").catch(() => {});
+}
+保存状況().then(n => { if(n < 音源一覧.length) 貯める(); });
+</script>
+
+</body>
+</html>

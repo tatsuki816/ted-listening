@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#F1F2ED" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14150F" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="TED聞く">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-180.png">
+<title>Inside the Mind of a Master Procrastinator</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Archivo:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#F1F2ED; --surface:#FBFCF8; --sunk:#E7E9DF;
+  --ink:#16180F; --ink-2:#5E6356; --ink-3:#8E9384;
+  --rule:#DBDDD1;
+  --mark:#CBE84F; --mark-ink:#16180F; --mark-soft:#EAF4B6;
+  --loop:#D8552F; --loop-soft:#F7E2D9;
+  --ui:"Archivo",system-ui,sans-serif;
+  --en:"Newsreader",Georgia,serif;
+  --jp:"Zen Kaku Gothic New","Hiragino Sans",sans-serif;
+  color-scheme:light;
+}
+[hidden]{display:none !important}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --ground:#14150F; --surface:#1D1F16; --sunk:#23261A;
+  --ink:#EAECE0; --ink-2:#9BA08C; --ink-3:#6E7362;
+  --rule:#2E3126;
+  --mark:#B4D12F; --mark-ink:#14150F; --mark-soft:#363B1C;
+  --loop:#F0724B; --loop-soft:#3B2318;
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#14150F; --surface:#1D1F16; --sunk:#23261A;
+  --ink:#EAECE0; --ink-2:#9BA08C; --ink-3:#6E7362;
+  --rule:#2E3126;
+  --mark:#B4D12F; --mark-ink:#14150F; --mark-soft:#363B1C;
+  --loop:#F0724B; --loop-soft:#3B2318;
+}
+html,body{height:100%}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:var(--ui); display:flex; flex-direction:column;
+  overscroll-behavior:none;
+  /* iPhone のノッチとホームバーに被らないように */
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box}
+button{font:inherit; color:inherit; background:none; border:none; cursor:pointer}
+:focus-visible{outline:2px solid var(--loop); outline-offset:2px; border-radius:4px}
+
+/* ── 上 ───────────────────────────── */
+header{
+  flex:none; background:var(--surface); border-bottom:1px solid var(--rule);
+  padding:10px 16px 8px; display:flex; flex-direction:column; gap:8px;
+}
+.kicker{
+  display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;
+  font-size:11px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3);
+}
+.kicker b{font-weight:600; letter-spacing:.06em; color:var(--ink-2)}
+.kicker a{color:inherit; text-decoration:underline; text-underline-offset:2px; text-transform:none; letter-spacing:.02em}
+.off{margin-left:auto; text-transform:none; letter-spacing:.02em; font-weight:600}
+.off.ok{color:var(--ink-2)}
+.off.ok::before{content:""; display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--mark); margin-right:5px; vertical-align:1px}
+.rows{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+.lbl{font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); flex:none}
+.chips{display:flex; gap:4px; flex-wrap:wrap}
+.segtitle{font-size:11.5px; color:var(--ink-2); letter-spacing:.01em}
+.chip{
+  font-size:12px; font-weight:500; padding:5px 10px; border-radius:999px;
+  border:1px solid var(--rule); background:var(--ground); color:var(--ink-2);
+  font-variant-numeric:tabular-nums; line-height:1.1;
+}
+.chip[aria-pressed="true"]{background:var(--mark); border-color:var(--mark); color:var(--mark-ink); font-weight:600}
+
+/* ── 本文 ─────────────────────────── */
+main{flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:6px 0 10px}
+.line{
+  display:grid; grid-template-columns:30px 1fr; gap:10px; align-items:start;
+  width:100%; text-align:left; padding:9px 16px 9px 10px;
+  border-left:3px solid transparent; border-bottom:1px solid var(--rule);
+}
+.line:last-child{border-bottom:none}
+.n{
+  font-size:10px; font-weight:600; color:var(--ink-3); font-variant-numeric:tabular-nums;
+  padding-top:5px; text-align:right; letter-spacing:.02em;
+}
+.dur{display:block; font-weight:400; color:var(--ink-3); opacity:.75; font-size:9px; margin-top:2px}
+.body{min-width:0}
+.en,.ja{display:block}
+.line [hidden]{display:none !important}
+.en{font-family:var(--en); font-size:18px; line-height:1.5; letter-spacing:.005em}
+.ja{font-family:var(--jp); font-size:13px; line-height:1.65; color:var(--ink-2); margin-top:4px}
+.line.done .en,.line.done .ja{color:var(--ink-3)}
+.line.now{background:var(--mark-soft); border-left-color:var(--mark)}
+.line.now .en{color:var(--ink); font-weight:500}
+.line.now .n{color:var(--ink-2)}
+.line.mark-a,.line.mark-b{border-left-color:var(--loop)}
+.tag{
+  display:inline-block; font-size:9px; font-weight:700; letter-spacing:.08em;
+  background:var(--loop); color:#fff; border-radius:3px; padding:1px 4px; margin-right:6px;
+  vertical-align:2px;
+}
+.line.inrange{background:var(--loop-soft)}
+.line.inrange.now{background:var(--mark-soft)}
+.veil{filter:blur(4.5px); opacity:.55; user-select:none}
+
+/* ── 下 ───────────────────────────── */
+footer{
+  flex:none; background:var(--surface); border-top:1px solid var(--rule);
+  padding:8px 16px 10px; display:flex; flex-direction:column; gap:8px;
+}
+.hint{font-size:11px; color:var(--ink-3); min-height:14px; line-height:1.3}
+.hint strong{color:var(--loop); font-weight:600}
+.seekrow{display:flex; align-items:center; gap:10px}
+.t{font-size:11px; color:var(--ink-2); font-variant-numeric:tabular-nums; flex:none; letter-spacing:.02em}
+input[type=range]{flex:1; min-width:0; accent-color:var(--mark); height:20px}
+.transport{display:flex; align-items:center; gap:8px}
+.tbtn{
+  width:40px; height:40px; border-radius:50%; border:1px solid var(--rule);
+  background:var(--ground); display:grid; place-items:center; flex:none;
+}
+.tbtn svg{width:17px; height:17px; fill:var(--ink)}
+#play{width:50px; height:50px; background:var(--ink); border-color:var(--ink)}
+#play svg{width:20px; height:20px; fill:var(--ground)}
+.spacer{flex:1}
+.settings{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+.settings .chip{padding:4px 9px; font-size:11px}
+#reveal[aria-pressed="true"]{background:var(--loop); border-color:var(--loop); color:#fff}
+@media (max-width:420px){ .en{font-size:17px} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kicker"><b>Tim Urban</b><span>TED 2016 &middot; 162 wpm</span><a class="src" href="https://www.ted.com/talks/tim_urban_inside_the_mind_of_a_master_procrastinator" target="_blank" rel="noopener">出典 CC BY-NC-ND 4.0</a><span class="off" id="offline"></span></div>
+  <div class="rows">
+    <span class="lbl">区間</span>
+    <div class="chips" id="segs"></div>
+    <span class="segtitle" id="segtitle"></span>
+  </div>
+  <div class="rows">
+    <span class="lbl">字幕</span>
+    <div class="chips" id="subs">
+      <button class="chip" data-v="off">なし</button>
+      <button class="chip" data-v="en">英</button>
+      <button class="chip" data-v="ja">日</button>
+      <button class="chip" data-v="both">英日</button>
+    </div>
+  </div>
+</header>
+
+<main id="main"></main>
+
+<footer>
+  <div class="hint" id="hint"></div>
+  <div class="seekrow">
+    <span class="t" id="tnow">0:00</span>
+    <input type="range" id="seek" min="0" max="1000" value="0" step="1" aria-label="再生位置">
+    <span class="t" id="tend">0:00</span>
+  </div>
+  <div class="transport">
+    <button class="tbtn" id="prev" aria-label="前の文"><svg viewBox="0 0 24 24"><path d="M7 6h2v12H7zm3 6l8-6v12z"/></svg></button>
+    <button class="tbtn" id="play" aria-label="再生"><svg viewBox="0 0 24 24" id="playicon"><path d="M8 5v14l11-7z"/></svg></button>
+    <button class="tbtn" id="next" aria-label="次の文"><svg viewBox="0 0 24 24"><path d="M15 6h2v12h-2zM6 6l8 6-8 6z"/></svg></button>
+    <span class="spacer"></span>
+    <button class="chip" id="reveal" aria-pressed="false">今の文を見る</button>
+  </div>
+  <div class="settings">
+    <span class="lbl">繰り返し</span>
+    <div class="chips" id="loops">
+      <button class="chip" data-v="off">流す</button>
+      <button class="chip" data-v="one">1文</button>
+      <button class="chip" data-v="ab">A–B</button>
+      <button class="chip" data-v="seg">区間</button>
+    </div>
+  </div>
+  <div class="settings">
+    <span class="lbl">速さ</span>
+    <div class="chips" id="rates">
+      <button class="chip" data-v="0.7">0.7×</button>
+      <button class="chip" data-v="0.85">0.85×</button>
+      <button class="chip" data-v="1">1×</button>
+    </div>
+    <span class="lbl">間</span>
+    <div class="chips" id="gaps">
+      <button class="chip" data-v="0">なし</button>
+      <button class="chip" data-v="1.5">1.5秒</button>
+      <button class="chip" data-v="3">3秒</button>
+    </div>
+  </div>
+</footer>
+
+<script>
+const DATA = {"1": {"見出し": "レポートの先延ばし", "文": [{"s": 0.65, "e": 4.94, "en": "So in college, I was a government major, which means I had to write a lot of papers.", "ja": "大学では政治学を専攻していて、つまりレポートをたくさん書かないといけなかった。"}, {"s": 4.94, "e": 9.49, "en": "Now, when a normal student writes a paper, they might spread the work out a little like this.", "ja": "さて、普通の学生がレポートを書くときは、こんなふうに作業を少しずつ散らすと思う。"}, {"s": 9.49, "e": 20.45, "en": "So, you know --  you get started maybe a little slowly, but you get enough done in the first week that, with some heavier days later on, everything gets done, things stay civil.", "ja": "最初はちょっとゆっくり始めるけど、最初の週にそれなりに進めておくから、後半に少し重い日があれば全部終わって、穏やかなまま済む。"}, {"s": 20.45, "e": 23.85, "en": "And I would want to do that like that.", "ja": "で、僕もそうやりたいと思っていた。"}, {"s": 23.85, "e": 26.15, "en": "That would be the plan.", "ja": "それが計画だった。"}, {"s": 26.15, "e": 32.4, "en": "I would have it all ready to go, but then, actually, the paper would come along, and then I would kind of do this.", "ja": "準備は万全にしておくんだけど、いざレポートが来ると、実際にはこうなる。"}, {"s": 32.4, "e": 36.76, "en": "And that would happen every single paper.", "ja": "そしてそれが、どのレポートでも毎回起きた。"}, {"s": 36.76, "e": 43.54, "en": "But then came my 90-page senior thesis, a paper you're supposed to spend a year on.", "ja": "ところがそこへ、1年かけて書くはずの90ページの卒業論文がやってきた。"}, {"s": 43.54, "e": 45.85, "en": "And I knew for a paper like that, my normal work flow was not an option.", "ja": "そういう論文では、いつものやり方は通用しないと分かっていた。"}, {"s": 45.85, "e": 49.5, "en": "It was way too big a project.", "ja": "規模が大きすぎた。"}, {"s": 49.5, "e": 52.1, "en": "So I planned things out, and I decided I kind of had to go something like this.", "ja": "だから計画を立てて、こんなふうにやろうと決めた。"}, {"s": 52.1, "e": 55.78, "en": "This is how the year would go.", "ja": "1年をこう進める、と。"}, {"s": 55.78, "e": 64.24, "en": "So I'd start off light, and I'd bump it up in the middle months, and then at the end, I would kick it up into high gear just like a little staircase.", "ja": "最初は軽く始めて、中盤で上げて、最後にギアを入れる。ちょうど小さな階段みたいに。"}, {"s": 64.24, "e": 65.7, "en": "How hard could it be to walk up the stairs?", "ja": "階段を上るくらい、どれだけ大変だっていうんだ。"}, {"s": 65.7, "e": 68.23, "en": "No big deal, right?", "ja": "大したことないよね？"}, {"s": 68.23, "e": 71.09, "en": "But then, the funniest thing happened.", "ja": "ところが、いちばん笑えることが起きた。"}, {"s": 71.09, "e": 72.92, "en": "Those first few months?", "ja": "最初の数ヶ月？"}, {"s": 72.92, "e": 75.98, "en": "They came and went, and I couldn't quite do stuff.", "ja": "来ては過ぎていって、僕はほとんど何もできなかった。"}, {"s": 75.98, "e": 77.59, "en": "So we had an awesome new revised plan.", "ja": "そこで、すばらしい新しい修正版の計画ができた。"}, {"s": 77.59, "e": 88.76, "en": "And then --  But then those middle months actually went by, and I didn't really write words, and so we were here.", "ja": "ところが今度は中盤の数ヶ月も過ぎていって、実際には一文字も書いておらず、こうなった。"}, {"s": 88.76, "e": 94.1, "en": "And then two months turned into one month, which turned into two weeks.", "ja": "そして2ヶ月が1ヶ月になり、1ヶ月が2週間になった。"}, {"s": 94.1, "e": 117.9, "en": "And one day I woke up with three days until the deadline, still not having written a word, and so I did the only thing I could: I wrote 90 pages over 72 hours, pulling not one but two all-nighters -- humans are not supposed to pull two all-nighters -- sprinted across campus, dove in slow motion, and got it in just at the deadline.", "ja": "ある日、締切まで3日という朝に目が覚めて、まだ一文字も書いていなくて、だから僕はできる唯一のことをした。72時間で90ページ書いて、徹夜を1回ではなく2回して（人間は徹夜を2回してはいけない）、キャンパスを全力で走って、スローモーションで飛び込んで、締切ぴったりに提出した。"}, {"s": 117.9, "e": 119.98, "en": "I thought that was the end of everything.", "ja": "これで全部終わったと思った。"}, {"s": 119.98, "e": 123.61, "en": "But a week later I get a call, and it's the school.", "ja": "でも1週間後に電話が来て、大学からだった。"}, {"s": 123.61, "e": 144.94, "en": "And they say, \"Is this Tim Urban?\" And I say, \"Yeah.\" And they say, \"We need to talk about your thesis.\" And I say, \"OK.\" And they say, \"It's the best one we've ever seen.\"   That did not happen.", "ja": "「ティム・アーバンさんですか」と言うので「はい」と答えると、「論文の件でお話が」と言う。「はい」と答えると、「今まで見た中で最高の出来です」…そんなことは起きていない。"}, {"s": 144.94, "e": 148.43, "en": "It was a very, very bad thesis.", "ja": "とてもとても出来の悪い論文だった。"}, {"s": 148.43, "e": 160.8, "en": "I just wanted to enjoy that one moment when all of you thought, \"This guy is amazing!\"  No, no, it was very, very bad.", "ja": "みんなが一瞬「この人すごい！」と思ったその瞬間を味わいたかっただけ。いや、本当にひどかった。"}, {"s": 160.8, "e": 163.34, "en": "Anyway, today I'm a writer-blogger guy.", "ja": "ともかく、今の僕はライター兼ブロガーだ。"}, {"s": 163.34, "e": 166.78, "en": "I write the blog Wait But Why.", "ja": "Wait But Why というブログを書いている。"}, {"s": 166.78, "e": 168.54, "en": "And a couple of years ago, I decided to write about procrastination.", "ja": "そして数年前、先延ばしについて書こうと決めた。"}, {"s": 168.54, "e": 169.5, "en": "My behavior has always perplexed the non-procrastinators around me, and I wanted to explain to the non-procrastinators of the world what goes on in the heads of procrastinators, and why we are the way we are.", "ja": "僕のふるまいは、まわりの先延ばししない人たちをずっと困惑させてきた。だから世界中の先延ばししない人たちに、先延ばしする人の頭の中で何が起きているのか、なぜ僕らはこうなのかを説明したかった。"}]}, "2": {"見出し": "脳の中のサル", "文": [{"s": 11.95, "e": 17.48, "en": "Now, I had a hypothesis that the brains of procrastinators were actually different than the brains of other people.", "ja": "僕には仮説があった。先延ばしする人の脳は、ほかの人の脳と実際に違うんじゃないか、と。"}, {"s": 17.48, "e": 27.55, "en": "And to test this, I found an MRI lab that actually let me scan both my brain and the brain of a proven non-procrastinator, so I could compare them.", "ja": "これを確かめるために、MRIの施設を見つけて、僕の脳と、先延ばししないと証明された人の脳の両方をスキャンさせてもらった。比べるために。"}, {"s": 27.55, "e": 29.01, "en": "I actually brought them here to show you today.", "ja": "今日はそれを、ここに持ってきた。"}, {"s": 29.01, "e": 31.23, "en": "I want you to take a look carefully to see if you can notice a difference.", "ja": "違いが分かるか、よく見てほしい。"}, {"s": 31.23, "e": 37.13, "en": "I know that if you're not a trained brain expert, it's not that obvious, but just take a look, OK?", "ja": "脳の専門家でなければ、そんなに分かりやすくはないと思うけど、まあ見てみて。"}, {"s": 37.13, "e": 39.42, "en": "So here's the brain of a non-procrastinator.", "ja": "これが先延ばししない人の脳。"}, {"s": 39.42, "e": 44.63, "en": "Now ...", "ja": "そして…"}, {"s": 44.63, "e": 46.82, "en": "here's my brain.", "ja": "これが僕の脳。"}, {"s": 46.82, "e": 54.21, "en": "There is a difference.", "ja": "違いがある。"}, {"s": 54.21, "e": 60.49, "en": "Both brains have a Rational Decision-Maker in them, but the procrastinator's brain also has an Instant Gratification Monkey.", "ja": "どちらの脳にも「理性的な意思決定者」がいる。でも先延ばしする人の脳には、それに加えて「すぐご褒美が欲しいサル」がいる。"}, {"s": 60.49, "e": 63.5, "en": "Now, what does this mean for the procrastinator?", "ja": "これは先延ばしする人にとって何を意味するのか。"}, {"s": 63.5, "e": 65.83, "en": "Well, it means everything's fine until this happens.", "ja": "こうなるまでは何も問題がない、ということ。"}, {"s": 65.83, "e": 84.39, "en": "[This is a perfect time to get some work done.] [Nope!] So the Rational Decision-Maker will make the rational decision to do something productive, but the Monkey doesn't like that plan, so he actually takes the wheel, and he says, \"Actually, let's read the entire Wikipedia page of the Nancy Kerrigan/ Tonya Harding scandal, because I just remembered that that happened.", "ja": "［今こそ仕事を進める絶好のタイミングだ］［いやだ！］理性的な意思決定者は、生産的なことをしようと理性的に決める。でもサルはその計画が気に入らない。だからハンドルを奪って言う。「それより、ナンシー・ケリガンとトーニャ・ハーディングの事件のWikipediaを全部読もう。今ちょうど思い出したから」"}, {"s": 84.39, "e": 92.11, "en": "Then --  Then we're going to go over to the fridge, to see if there's anything new in there since 10 minutes ago.", "ja": "それから、10分前から何か新しいものが入っていないか、冷蔵庫を見に行く。"}, {"s": 92.11, "e": 103.68, "en": "After that, we're going to go on a YouTube spiral that starts with videos of Richard Feynman talking about magnets and ends much, much later with us watching interviews with Justin Bieber's mom.", "ja": "そのあと、リチャード・ファインマンが磁石について語る動画から始まって、ずっとずっと後にジャスティン・ビーバーの母親のインタビューを見て終わる、YouTubeの渦に入る。"}, {"s": 103.68, "e": 109.58, "en": "\"All of that's going to take a while, so we're not going to really have room on the schedule for any work today.", "ja": "「それだけやると時間がかかるから、今日は仕事をする余裕はスケジュールにないな。"}, {"s": 109.58, "e": 116.82, "en": "Sorry!\"  Now, what is going on here?", "ja": "ごめん！」さて、ここで何が起きているのか。"}, {"s": 116.82, "e": 124.7, "en": "The Instant Gratification Monkey does not seem like a guy you want behind the wheel.", "ja": "すぐご褒美が欲しいサルは、ハンドルを任せたい相手には見えない。"}, {"s": 124.7, "e": 125.97, "en": "He lives entirely in the present moment.", "ja": "彼は完全に「今この瞬間」だけに生きている。"}, {"s": 125.97, "e": 132.52, "en": "He has no memory of the past, no knowledge of the future, and he only cares about two things: easy and fun.", "ja": "過去の記憶も未来の知識も持っていなくて、気にするのは2つだけ。楽であることと、楽しいこと。"}, {"s": 132.52, "e": 134.84, "en": "Now, in the animal world, that works fine.", "ja": "動物の世界なら、それでうまくいく。"}, {"s": 134.84, "e": 142.78, "en": "If you're a dog and you spend your whole life doing nothing other than easy and fun things, you're a huge success!", "ja": "犬で、一生のあいだ楽で楽しいことしかしていなければ、それは大成功だ。"}, {"s": 142.78, "e": 148.47, "en": "And to the Monkey, humans are just another animal species.", "ja": "そしてサルから見れば、人間もただの動物の一種でしかない。"}, {"s": 148.47, "e": 155.12, "en": "You have to keep well-slept, well-fed and propagating into the next generation, which in tribal times might have worked OK.", "ja": "よく寝て、よく食べて、次の世代につなげていればいい。部族社会の時代なら、それで問題なかったかもしれない。"}, {"s": 155.12, "e": 157.43, "en": "But, if you haven't noticed, now we're not in tribal times.", "ja": "でも、気づいているかもしれないけど、今は部族社会の時代じゃない。"}, {"s": 157.43, "e": 160.3, "en": "We're in an advanced civilization, and the Monkey does not know what that is.", "ja": "僕らは高度な文明の中にいて、サルはそれが何なのかを知らない。"}, {"s": 160.3, "e": 163.0, "en": "Which is why we have another guy in our brain, the Rational Decision-Maker, who gives us the ability to do things no other animal can do.", "ja": "だからこそ、脳にはもう一人いる。理性的な意思決定者。ほかのどんな動物にもできないことを、僕らにできるようにしてくれる存在だ。"}]}, "3": {"見出し": "パニック・モンスター", "文": [{"s": 6.15, "e": 9.2, "en": "We can visualize the future.", "ja": "僕らは未来を思い描ける。"}, {"s": 9.2, "e": 11.15, "en": "We can see the big picture.", "ja": "全体像を見渡せる。"}, {"s": 11.15, "e": 12.92, "en": "We can make long-term plans.", "ja": "長期的な計画を立てられる。"}, {"s": 12.92, "e": 14.3, "en": "And he wants to take all of that into account.", "ja": "そして彼は、そのすべてを考慮に入れたい。"}, {"s": 14.3, "e": 19.35, "en": "And he wants to just have us do whatever makes sense to be doing right now.", "ja": "今やるのが筋の通ることを、ただやらせたいと思っている。"}, {"s": 19.35, "e": 27.97, "en": "Now, sometimes it makes sense to be doing things that are easy and fun, like when you're having dinner or going to bed or enjoying well-earned leisure time.", "ja": "もちろん、楽で楽しいことをするのが筋の通る場合もある。夕食のときとか、寝るときとか、正当に稼いだ自由時間を楽しむときとか。"}, {"s": 27.97, "e": 29.82, "en": "That's why there's an overlap.", "ja": "だから重なる部分がある。"}, {"s": 29.82, "e": 31.29, "en": "Sometimes they agree.", "ja": "意見が一致することもある。"}, {"s": 31.29, "e": 39.53, "en": "But other times, it makes much more sense to be doing things that are harder and less pleasant, for the sake of the big picture.", "ja": "でもそれ以外のときは、全体像のために、もっと大変で楽しくないことをする方がずっと筋が通る。"}, {"s": 39.53, "e": 41.1, "en": "And that's when we have a conflict.", "ja": "そこで対立が起きる。"}, {"s": 41.1, "e": 51.13, "en": "And for the procrastinator, that conflict tends to end a certain way every time, leaving him spending a lot of time in this orange zone, an easy and fun place that's entirely out of the Makes Sense circle.", "ja": "そして先延ばしする人の場合、その対立は毎回決まった形で終わる。結果として彼は、このオレンジの領域で多くの時間を過ごすことになる。楽で楽しいけれど、「筋が通る」の円からは完全に外れた場所だ。"}, {"s": 51.13, "e": 55.48, "en": "I call it the Dark Playground.", "ja": "僕はそこを「暗い遊び場」と呼んでいる。"}, {"s": 55.48, "e": 62.59, "en": "Now, the Dark Playground is a place that all of you procrastinators out there know very well.", "ja": "暗い遊び場は、先延ばしするみなさんならよく知っている場所だ。"}, {"s": 62.59, "e": 68.22, "en": "It's where leisure activities happen at times when leisure activities are not supposed to be happening.", "ja": "本来なら娯楽をしているべきでない時間に、娯楽が行われる場所。"}, {"s": 68.22, "e": 79.58, "en": "The fun you have in the Dark Playground isn't actually fun, because it's completely unearned, and the air is filled with guilt, dread, anxiety, self-hatred -- all of those good procrastinator feelings.", "ja": "暗い遊び場で味わう楽しさは、実は楽しくない。まったく稼いだものではないし、空気は罪悪感、恐れ、不安、自己嫌悪で満ちている。先延ばしする人らしい、いい気分の数々だ。"}, {"s": 79.58, "e": 89.32, "en": "And the question is, in this situation, with the Monkey behind the wheel, how does the procrastinator ever get himself over here to this blue zone, a less pleasant place, but where really important things happen?", "ja": "問題はこうだ。この状況で、サルがハンドルを握っているのに、先延ばしする人はどうやってこの青い領域まで自分を連れていくのか。楽しくはないけれど、本当に大事なことが起きる場所まで。"}, {"s": 89.32, "e": 102.37, "en": "Well, turns out the procrastinator has a guardian angel, someone who's always looking down on him and watching over him in his darkest moments -- someone called the Panic Monster.", "ja": "どうやら、先延ばしする人には守護天使がいるらしい。いつも見下ろして見守っていて、いちばん暗い瞬間に現れる誰か。「パニック・モンスター」と呼ばれる存在だ。"}, {"s": 102.37, "e": 120.76, "en": "Now, the Panic Monster is dormant most of the time, but he suddenly wakes up anytime a deadline gets too close or there's danger of public embarrassment, a career disaster or some other scary consequence.", "ja": "パニック・モンスターはほとんどの時間眠っている。でも締切が近づきすぎたとき、人前で恥をかく危険があるとき、仕事上の破滅やそのほか恐ろしい結果が見えたときに、突然目を覚ます。"}, {"s": 120.76, "e": 123.3, "en": "And importantly, he's the only thing the Monkey is terrified of.", "ja": "そして重要なのは、サルが恐れている唯一の存在が彼だということ。"}, {"s": 123.3, "e": 135.37, "en": "Now, he became very relevant in my life pretty recently, because the people of TED reached out to me about six months ago and invited me to do a TED Talk.", "ja": "彼は最近、僕の人生でとても重要になった。半年ほど前にTEDの人たちから連絡が来て、TEDトークをしないかと誘われたからだ。"}, {"s": 135.37, "e": 142.56, "en": "Now, of course, I said yes.", "ja": "もちろん、僕は「はい」と答えた。"}, {"s": 142.56, "e": 144.49, "en": "It's always been a dream of mine to have done a TED Talk in the past.", "ja": "「過去にTEDトークをやったことがある」というのは、ずっと僕の夢だった。"}, {"s": 144.49, "e": 161.7, "en": "But in the middle of all this excitement, the Rational Decision-Maker seemed to have something else on his mind.", "ja": "でもその興奮の真ん中で、理性的な意思決定者は何か別のことを考えているようだった。"}, {"s": 161.7, "e": 165.02, "en": "He was saying, \"Are we clear on what we just accepted?", "ja": "彼は言っていた。「今引き受けたものが何か、分かっているのか？"}, {"s": 165.02, "e": 167.59, "en": "Do we get what's going to be now happening one day in the future?", "ja": "いつか未来のある日に何が起きるのか、理解しているのか？"}, {"s": 167.59, "e": 170.0, "en": "We need to sit down and work on this right now.\" And the Monkey said, \"Totally agree, but let's just open Google Earth and zoom in to the bottom of India, like 200 feet above the ground, and scroll up for two and a half hours til we get to the top of the country, so we can get a better feel for India.\"  So that's what we did that day.", "ja": "今すぐ座って、これに取りかかる必要がある」するとサルが言った。「まったく同感だ。でもその前にGoogle Earthを開いて、インドの南端まで、地上60メートルくらいまで寄って、そこから2時間半スクロールして国の北端まで行こう。インドの感じがもっとよく掴めるから」というわけで、その日僕らはそれをやった。"}]}, "4": {"見出し": "TEDの準備", "文": [{"s": 20.65, "e": 30.02, "en": "As six months turned into four and then two and then one, the people of TED decided to release the speakers.", "ja": "半年が4ヶ月になり、2ヶ月になり、1ヶ月になった頃、TEDの人たちが登壇者を発表することにした。"}, {"s": 30.02, "e": 35.78, "en": "And I opened up the website, and there was my face staring right back at me.", "ja": "サイトを開いたら、僕の顔がこっちを見返していた。"}, {"s": 35.78, "e": 37.16, "en": "And guess who woke up?", "ja": "さて、誰が目を覚ましたと思う？"}, {"s": 37.16, "e": 45.4, "en": "So the Panic Monster starts losing his mind, and a few seconds later, the whole system's in mayhem.", "ja": "パニック・モンスターが取り乱し始めて、数秒後には全体が大混乱になる。"}, {"s": 45.4, "e": 56.14, "en": "And the Monkey -- remember, he's terrified of the Panic Monster -- boom, he's up the tree!", "ja": "そしてサルは、彼がパニック・モンスターを恐れているのを思い出してほしい、ばん、木の上に逃げる。"}, {"s": 56.14, "e": 61.11, "en": "And finally, finally, the Rational Decision-Maker can take the wheel and I can start working on the talk.", "ja": "そしてついに、ついに理性的な意思決定者がハンドルを握れて、僕はトークの準備を始められる。"}, {"s": 61.11, "e": 77.69, "en": "Now, the Panic Monster explains all kinds of pretty insane procrastinator behavior, like how someone like me could spend two weeks unable to start the opening sentence of a paper, and then miraculously find the unbelievable work ethic to stay up all night and write eight pages.", "ja": "パニック・モンスターは、先延ばしする人のかなり正気でないふるまいを全部説明してくれる。たとえば僕みたいな人間が、レポートの1文目を2週間書き出せずにいたのに、奇跡的にとんでもない勤勉さを見つけて、徹夜で8ページ書けるのはなぜか。"}, {"s": 77.69, "e": 84.89, "en": "And this entire situation, with the three characters -- this is the procrastinator's system.", "ja": "この3人の登場人物がそろった状況、これが先延ばしする人のシステムだ。"}, {"s": 84.89, "e": 87.6, "en": "It's not pretty, but in the end, it works.", "ja": "きれいではないけれど、最終的には機能する。"}, {"s": 87.6, "e": 91.04, "en": "This is what I decided to write about on the blog a couple of years ago.", "ja": "これを数年前、ブログに書こうと決めた。"}, {"s": 91.04, "e": 95.13, "en": "When I did, I was amazed by the response.", "ja": "書いてみて、反応に驚いた。"}, {"s": 95.13, "e": 103.1, "en": "Literally thousands of emails came in, from all different kinds of people from all over the world, doing all different kinds of things.", "ja": "文字どおり何千通ものメールが、世界中のあらゆる種類の人たちから、あらゆる種類の仕事をしている人たちから届いた。"}, {"s": 103.1, "e": 107.86, "en": "These are people who were nurses, bankers, painters, engineers and lots and lots of PhD students.", "ja": "看護師、銀行員、画家、エンジニア、そして本当にたくさんの博士課程の学生たち。"}, {"s": 107.86, "e": 120.37, "en": "And they were all writing, saying the same thing: \"I have this problem too.\" But what struck me was the contrast between the light tone of the post and the heaviness of these emails.", "ja": "全員が同じことを書いていた。「自分もこの問題を抱えています」でも僕が引っかかったのは、記事の軽い調子と、これらのメールの重さとの落差だった。"}, {"s": 120.37, "e": 128.38, "en": "These people were writing with intense frustration about what procrastination had done to their lives, about what this Monkey had done to them.", "ja": "その人たちは、先延ばしが自分の人生に何をしたか、このサルが自分に何をしたかを、強い苛立ちとともに書いていた。"}, {"s": 128.38, "e": 135.39, "en": "And I thought about this, and I said, well, if the procrastinator's system works, then what's going on?", "ja": "それについて考えて、思った。先延ばしする人のシステムが機能しているなら、いったい何が起きているんだ？"}, {"s": 135.39, "e": 138.53, "en": "Why are all of these people in such a dark place?", "ja": "なぜこの人たちはこんなに暗い場所にいるんだ？"}, {"s": 138.53, "e": 141.04, "en": "Well, it turns out that there's two kinds of procrastination.", "ja": "どうやら、先延ばしには2種類あるらしい。"}, {"s": 141.04, "e": 148.35, "en": "Everything I've talked about today, the examples I've given, they all have deadlines.", "ja": "今日話してきたこと、挙げてきた例には、全部締切がある。"}, {"s": 148.35, "e": 153.79, "en": "And when there's deadlines, the effects of procrastination are contained to the short term because the Panic Monster gets involved.", "ja": "締切があるとき、先延ばしの影響は短期に収まる。パニック・モンスターが出てくるからだ。"}, {"s": 153.79, "e": 157.81, "en": "But there's a second kind of procrastination that happens in situations when there is no deadline.", "ja": "でも締切がない状況で起きる、第二の種類の先延ばしがある。"}, {"s": 157.81, "e": 171.28, "en": "So if you wanted a career where you're a self-starter -- something in the arts, something entrepreneurial -- there's no deadlines on those things at first, because nothing's happening, not until you've gone out and done the hard work to get momentum, get things going.", "ja": "たとえば自分で動き出す必要のある仕事、芸術の世界や起業のようなものを目指すなら、最初のうち締切は存在しない。何も起きていないからだ。自分が外に出て、勢いをつけるための大変な仕事をするまでは。"}, {"s": 171.28, "e": 174.0, "en": "There's also all kinds of important things outside of your career that don't involve any deadlines, like seeing your family or exercising and taking care of your health, working on your relationship or getting out of a relationship that isn't working.", "ja": "仕事以外にも、締切のない大事なことはいくらでもある。家族に会うこと、運動して健康に気をつけること、関係を良くしようと努めること、うまくいっていない関係から抜け出すこと。"}]}, "5": {"見出し": "締切の無い先延ばし", "文": [{"s": 8.38, "e": 20.99, "en": "Now if the procrastinator's only mechanism of doing these hard things is the Panic Monster, that's a problem, because in all of these non-deadline situations, the Panic Monster doesn't show up.", "ja": "こうした大変なことをやるための仕組みが、先延ばしする人にとってパニック・モンスターだけだとしたら、それは問題だ。なぜなら、締切のないこれらの状況では、パニック・モンスターは現れないから。"}, {"s": 20.99, "e": 26.84, "en": "He has nothing to wake up for, so the effects of procrastination, they're not contained; they just extend outward forever.", "ja": "目を覚ます理由がない。だから先延ばしの影響は収まらない。ただ外へ、いつまでも広がっていく。"}, {"s": 26.84, "e": 35.32, "en": "And it's this long-term kind of procrastination that's much less visible and much less talked about than the funnier, short-term deadline-based kind.", "ja": "そしてこの長期の先延ばしこそが、もっと笑える短期の締切型のものに比べて、ずっと見えにくく、ずっと語られていない。"}, {"s": 35.32, "e": 38.25, "en": "It's usually suffered quietly and privately.", "ja": "たいていは静かに、人知れず耐えられている。"}, {"s": 38.25, "e": 43.49, "en": "And it can be the source of a huge amount of long-term unhappiness, and regrets.", "ja": "そしてそれは、長期にわたる膨大な不幸と後悔の源になりうる。"}, {"s": 43.49, "e": 50.97, "en": "And I thought, that's why those people are emailing, and that's why they're in such a bad place.", "ja": "だから思った。あの人たちがメールを送ってくるのはそれが理由で、あんなに苦しい場所にいるのもそれが理由なんだと。"}, {"s": 50.97, "e": 53.5, "en": "It's not that they're cramming for some project.", "ja": "何かの課題を詰め込みでやっているからじゃない。"}, {"s": 53.5, "e": 59.71, "en": "It's that long-term procrastination has made them feel like a spectator, at times, in their own lives.", "ja": "長期の先延ばしが、自分の人生において、ときに自分を観客のように感じさせてきたからだ。"}, {"s": 59.71, "e": 65.1, "en": "The frustration is not that they couldn't achieve their dreams; it's that they weren't even able to start chasing them.", "ja": "苛立ちの正体は、夢を叶えられなかったことではない。追いかけ始めることすらできなかったことだ。"}, {"s": 65.1, "e": 73.68, "en": "So I read these emails and I had a little bit of an epiphany -- that I don't think non-procrastinators exist.", "ja": "これらのメールを読んで、僕はちょっとした気づきを得た。先延ばししない人なんて、存在しないんじゃないか。"}, {"s": 73.68, "e": 77.48, "en": "That's right -- I think all of you are procrastinators.", "ja": "そう、みなさん全員が先延ばしする人だと思う。"}, {"s": 77.48, "e": 92.15, "en": "Now, you might not all be a mess, like some of us,  and some of you may have a healthy relationship with deadlines, but remember: the Monkey's sneakiest trick is when the deadlines aren't there.", "ja": "僕らの一部ほどひどい状態ではないかもしれないし、締切と健全な関係を築いている人もいるかもしれない。でも覚えておいてほしい。サルのいちばん狡いやり口は、締切がないときに出てくる。"}, {"s": 92.15, "e": 94.75, "en": "Now, I want to show you one last thing.", "ja": "最後にひとつ、見てほしいものがある。"}, {"s": 94.75, "e": 96.8, "en": "I call this a Life Calendar.", "ja": "これを「人生カレンダー」と呼んでいる。"}, {"s": 96.8, "e": 99.85, "en": "That's one box for every week of a 90-year life.", "ja": "90年の人生の、1週間につき1つのマス。"}, {"s": 99.85, "e": 106.46, "en": "That's not that many boxes, especially since we've already used a bunch of those.", "ja": "そんなに多くのマスじゃない。しかも、もうかなりの数を使ってしまっている。"}, {"s": 106.46, "e": 110.11, "en": "So I think we need to all take a long, hard look at that calendar.", "ja": "だから僕らは全員、そのカレンダーを長く、真剣に見る必要があると思う。"}, {"s": 110.11, "e": 119.51, "en": "We need to think about what we're really procrastinating on, because everyone is procrastinating on something in life.", "ja": "自分が本当は何を先延ばしにしているのかを考える必要がある。誰もが人生の中で何かを先延ばしにしているから。"}, {"s": 119.51, "e": 124.28, "en": "We need to stay aware of the Instant Gratification Monkey.", "ja": "すぐご褒美が欲しいサルの存在に、気づいていなければならない。"}, {"s": 124.28, "e": 128.96, "en": "That's a job for all of us.", "ja": "それは僕ら全員の仕事だ。"}, {"s": 128.96, "e": 134.49, "en": "And because there's not that many boxes on there, it's a job that should probably start today.", "ja": "そして、マスはそんなに多くないから、たぶん今日から始めるべき仕事だ。"}, {"s": 134.49, "e": 136.81, "en": "Well, maybe not today, but ...", "ja": "まあ、今日じゃないかもしれないけど…"}, {"s": 136.81, "e": 141.5, "en": "You know.", "ja": "ね。"}, {"s": 141.5, "e": 143.08, "en": "Sometime soon.", "ja": "近いうちに。"}, {"s": 143.08, "e": 144.89, "en": "Thank you.", "ja": "ありがとう。"}]}};
+
+const 保存キー = "ted-tim-urban-v1";
+let st = {seg:1, subs:"en", loop:"off", rate:1, gap:0, a:null, b:null};
+try{ const r = localStorage.getItem(保存キー); if(r) Object.assign(st, JSON.parse(r)); }catch(e){}
+st.a = null; st.b = null;
+
+const audio = new Audio();
+audio.preload = "metadata";
+let 文 = [], idx = -1, ループ中 = false, 見せる = false, 手で動かした = 0, つまみ中 = false;
+// 1文ループで繰り返している文。idx（今の文）は境目の直前に次へ進むので、ループの的には使えない
+let 固定 = -1;
+
+const $ = s => document.querySelector(s);
+const main = $("#main"), hint = $("#hint"), seek = $("#seek");
+
+function 秒表示(x){ x = Math.max(0, x||0); const m = Math.floor(x/60), s = Math.floor(x%60); return m + ":" + String(s).padStart(2,"0"); }
+function しまう(){ try{ localStorage.setItem(保存キー, JSON.stringify({seg:st.seg, subs:st.subs, loop:st.loop, rate:st.rate, gap:st.gap})); }catch(e){} }
+
+/* ── 組み立て ───────────────────── */
+(function 区間ボタン(){
+  const box = $("#segs");
+  for(const k of Object.keys(DATA)){
+    const b = document.createElement("button");
+    b.className = "chip"; b.dataset.v = k; b.textContent = k;
+    box.appendChild(b);
+  }
+})();
+
+function 描く(){
+  文 = DATA[st.seg].文;
+  main.innerHTML = "";
+  文.forEach((s, i) => {
+    const row = document.createElement("button");
+    row.className = "line"; row.dataset.i = i;
+    row.innerHTML =
+      '<span class="n">' + (i+1) + '<span class="dur">' + (s.e - s.s).toFixed(1) + 's</span></span>' +
+      '<span class="body">' +
+        '<span class="en"></span>' +
+        '<span class="ja"></span>' +
+      '</span>';
+    row.querySelector(".en").textContent = s.en;
+    row.querySelector(".ja").textContent = s.ja;
+    main.appendChild(row);
+  });
+  idx = -1; 固定 = -1;
+  audio.src = "audio/" + st.seg + ".mp3";
+  audio.playbackRate = st.rate;
+  st.a = st.b = null;
+  字幕を当てる(); 印を塗る(); 助言(); ボタンを揃える();
+  $("#tend").textContent = 秒表示(文[文.length-1].e);
+  $("#segtitle").textContent = DATA[st.seg].見出し;
+  if("mediaSession" in navigator){
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: "区間" + st.seg + "｜" + DATA[st.seg].見出し,
+      artist: "Tim Urban", album: "Inside the Mind of a Master Procrastinator"
+    });
+  }
+}
+
+function 字幕を当てる(){
+  const 英 = st.subs === "en" || st.subs === "both";
+  const 日 = st.subs === "ja" || st.subs === "both";
+  main.querySelectorAll(".line").forEach((row, i) => {
+    // 英文は「なし」でも場所は取らせる。行の長さで文の長さの見当がつく方が書き取りに効く
+    row.querySelector(".en").classList.toggle("veil", !英 && !(見せる && i === idx));
+    row.querySelector(".ja").hidden = !日;
+  });
+}
+
+function 印を塗る(){
+  const a = st.a, b = st.b;
+  main.querySelectorAll(".line").forEach((row, i) => {
+    row.classList.toggle("now", i === idx);
+    row.classList.toggle("done", idx >= 0 && i < idx);
+    row.classList.toggle("mark-a", a === i);
+    row.classList.toggle("mark-b", b === i);
+    row.classList.toggle("inrange", a !== null && b !== null && i >= a && i <= b);
+    const old = row.querySelector(".tag"); if(old) old.remove();
+    if(a === i || b === i){
+      const t = document.createElement("span");
+      t.className = "tag"; t.textContent = (a === i ? "A" : "B");
+      row.querySelector(".body").prepend(t);
+    }
+  });
+}
+
+function ボタンを揃える(){
+  const 当てる = (id, v) => document.querySelectorAll("#" + id + " .chip").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v == v)));
+  当てる("segs", st.seg); 当てる("subs", st.subs); 当てる("loops", st.loop);
+  当てる("rates", st.rate); 当てる("gaps", st.gap);
+  $("#reveal").setAttribute("aria-pressed", String(見せる));
+}
+
+function 助言(){
+  if(st.loop === "ab"){
+    if(st.a === null) hint.innerHTML = "繰り返したい範囲の<strong>最初の文</strong>をタップ";
+    else if(st.b === null) hint.innerHTML = "次に<strong>最後の文</strong>をタップ（同じ文でもいい）";
+    else hint.innerHTML = (st.a+1) + "〜" + (st.b+1) + " を繰り返し中。もう一度タップすると引き直せる";
+  } else if(st.loop === "one"){ hint.textContent = "今の1文を繰り返す。文をタップするとそこへ移る";
+  } else if(st.loop === "seg"){ hint.textContent = "区間の終わりまで行ったら頭に戻る";
+  } else { hint.textContent = "文をタップするとそこから再生。字幕なしで聞いて「今の文」で答え合わせ"; }
+}
+
+/* ── 動き ───────────────────────── */
+function 今どこ(t){
+  for(let i = 文.length - 1; i >= 0; i--) if(t >= 文[i].s - 0.05) return i;
+  return 0;   // 冒頭の拍手や間はこれから読む文に含める
+}
+
+function 飛ぶ(秒, 鳴らす){
+  audio.currentTime = Math.max(0, 秒);
+  if(鳴らす !== false) audio.play().catch(()=>{});
+}
+
+function 戻す(秒){
+  if(ループ中) return;
+  ループ中 = true;
+  if(st.gap > 0){
+    audio.pause();
+    setTimeout(() => { audio.currentTime = Math.max(0, 秒); audio.play().catch(()=>{}); ループ中 = false; }, st.gap * 1000);
+  } else {
+    audio.currentTime = Math.max(0, 秒);
+    ループ中 = false;
+  }
+}
+
+// ループの境目を越えたら戻す。rAF は iPhone で画面を消すと止まるので、
+// timeupdate と 0.1 秒のタイマーからも呼ぶ（どれか1つが生きていれば戻せる）
+function 境目を見る(){
+  if(ループ中 || audio.paused || !文.length) return;
+  const t = audio.currentTime;
+  if(st.loop === "one"){
+    if(固定 < 0) 固定 = 今どこ(t);
+    if(t >= 文[固定].e - 0.03 || t < 文[固定].s - 0.3) 戻す(文[固定].s);
+  } else if(st.loop === "ab" && st.a !== null && st.b !== null){
+    if(t >= 文[st.b].e - 0.03 || t < 文[st.a].s - 0.3) 戻す(文[st.a].s);
+  }
+}
+audio.addEventListener("timeupdate", 境目を見る);
+setInterval(境目を見る, 100);
+
+function 拍(){
+  const t = audio.currentTime;
+  if(!つまみ中){
+    const 尻 = 文[文.length-1].e;
+    seek.value = Math.round(Math.min(1, t / 尻) * 1000);
+    $("#tnow").textContent = 秒表示(t);
+  }
+  境目を見る();
+  const 新 = (st.loop === "one" && 固定 >= 0) ? 固定 : 今どこ(audio.currentTime);
+  if(新 !== idx){
+    idx = 新; 見せる = false;
+    印を塗る(); 字幕を当てる(); ボタンを揃える();
+    const row = main.querySelector('.line[data-i="' + idx + '"]');
+    if(row && Date.now() - 手で動かした > 5000) row.scrollIntoView({block:"center", behavior:"smooth"});
+  }
+  requestAnimationFrame(拍);
+}
+requestAnimationFrame(拍);
+
+audio.addEventListener("ended", () => {
+  if(st.loop === "seg"){ 戻す(0); if(st.gap === 0) audio.play().catch(()=>{}); }
+  else 再生表示(false);
+});
+audio.addEventListener("play", () => { 再生表示(true); 眠らせない(); });
+audio.addEventListener("pause", () => { if(!ループ中) 再生表示(false); });
+
+function 再生表示(鳴ってる){
+  $("#playicon").innerHTML = 鳴ってる
+    ? '<path d="M6 5h4v14H6zm8 0h4v14h-4z"/>'
+    : '<path d="M8 5v14l11-7z"/>';
+  $("#play").setAttribute("aria-label", 鳴ってる ? "一時停止" : "再生");
+}
+
+let 錠 = null;
+async function 眠らせない(){
+  try{ if("wakeLock" in navigator && !錠) 錠 = await navigator.wakeLock.request("screen"); }catch(e){}
+}
+document.addEventListener("visibilitychange", () => { if(document.visibilityState === "visible" && !audio.paused) 眠らせない(); });
+
+/* ── 操作 ───────────────────────── */
+main.addEventListener("click", e => {
+  const row = e.target.closest(".line"); if(!row) return;
+  const i = +row.dataset.i;
+  if(st.loop === "ab"){
+    if(st.a === null || st.b !== null){ st.a = i; st.b = null; 飛ぶ(文[i].s); }
+    else if(i >= st.a){ st.b = i; 飛ぶ(文[st.a].s); }
+    else { st.a = i; 飛ぶ(文[i].s); }
+    印を塗る(); 助言();
+  } else {
+    固定 = i;
+    飛ぶ(文[i].s);
+  }
+});
+
+$("#play").addEventListener("click", () => { if(audio.paused) audio.play().catch(()=>{}); else audio.pause(); });
+$("#prev").addEventListener("click", () => {
+  const t = audio.currentTime;
+  if(st.loop === "one" && 固定 >= 0) idx = 固定;
+  const 頭に戻すか = idx >= 0 && t - 文[idx].s > 1.2;
+  const j = 頭に戻すか ? idx : Math.max(0, idx - 1);
+  固定 = j;
+  飛ぶ(文[j].s);
+});
+$("#next").addEventListener("click", () => { const j = Math.min(文.length - 1, idx + 1); 固定 = j; 飛ぶ(文[j].s); });
+
+seek.addEventListener("pointerdown", () => { つまみ中 = true; });
+seek.addEventListener("change", () => {
+  つまみ中 = false;
+  const 先 = (seek.value / 1000) * 文[文.length-1].e;
+  固定 = 今どこ(先);
+  飛ぶ(先, !audio.paused);
+});
+seek.addEventListener("input", () => { $("#tnow").textContent = 秒表示((seek.value / 1000) * 文[文.length-1].e); });
+
+main.addEventListener("scroll", () => { 手で動かした = Date.now(); }, {passive:true});
+
+function 束ねる(id, 効く){
+  document.getElementById(id).addEventListener("click", e => {
+    const b = e.target.closest(".chip"); if(!b) return;
+    効く(b.dataset.v); ボタンを揃える(); しまう();
+  });
+}
+束ねる("segs",  v => { const 鳴ってた = !audio.paused; st.seg = +v; 描く(); if(鳴ってた) audio.play().catch(()=>{}); });
+束ねる("subs",  v => { st.subs = v; 字幕を当てる(); });
+束ねる("loops", v => { st.loop = v; st.a = st.b = null; 固定 = Math.max(0, idx); 印を塗る(); 助言(); });
+束ねる("rates", v => { st.rate = +v; audio.playbackRate = st.rate; });
+束ねる("gaps",  v => { st.gap = +v; });
+
+$("#reveal").addEventListener("click", () => { 見せる = !見せる; 字幕を当てる(); ボタンを揃える(); });
+
+document.addEventListener("keydown", e => {
+  if(e.target.tagName === "INPUT") return;
+  if(e.code === "Space"){ e.preventDefault(); $("#play").click(); }
+  if(e.code === "ArrowLeft"){ e.preventDefault(); $("#prev").click(); }
+  if(e.code === "ArrowRight"){ e.preventDefault(); $("#next").click(); }
+});
+
+描く(); 再生表示(false);
+
+/* ── 圏外で使う準備 ─────────────────── */
+// sw.js のキャッシュ名と揃える
+const キャッシュ名 = "ted-tim-urban-v2";
+const 音源一覧 = Object.keys(DATA).map(k => new URL("audio/" + k + ".mp3", location.href).href);
+
+async function 保存状況(){
+  const el = $("#offline");
+  if(!("caches" in window)){ el.textContent = ""; return 0; }
+  try{
+    const c = await caches.open(キャッシュ名);
+    let n = 0;
+    for(const u of 音源一覧) if(await c.match(u)) n++;
+    el.textContent = n >= 音源一覧.length ? "圏外OK" : "保存中 " + n + "/" + 音源一覧.length;
+    el.classList.toggle("ok", n >= 音源一覧.length);
+    return n;
+  }catch(e){ el.textContent = ""; return 0; }
+}
+
+async function 貯める(){
+  if(!("caches" in window)) return;
+  try{
+    const c = await caches.open(キャッシュ名);
+    for(const u of 音源一覧){
+      if(await c.match(u)) continue;
+      try{ const r = await fetch(u); if(r.ok){ await c.put(u, r); 保存状況(); } }catch(e){}
+    }
+  }catch(e){}
+  保存状況();
+}
+
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.register("sw.js").catch(() => {});
+}
+保存状況().then(n => { if(n < 音源一覧.length) 貯める(); });
+</script>
+
+</body>
+</html>
