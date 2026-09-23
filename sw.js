@@ -1,6 +1,9 @@
 // 1回開けば圏外でも動くようにする Service Worker。
-// キャッシュ名はページ側（index.html）と揃える。中身を変えたら v を上げる
-const キャッシュ名 = "ted-tim-urban-v2";
+// ページの殻（HTML・アイコン）と音声でキャッシュを分ける。
+// 殻はコードを直すたびに v を上げる。音声は中身が変わらない限り上げない（上げると 17MB 取り直しになる）
+// 音声のキャッシュ名はページ側（index.html）と揃える
+const キャッシュ名 = "ted-shell-v3";
+const 音声キャッシュ = "ted-audio-v1";
 const 殻 = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-512.png"];
 
 self.addEventListener("install", e => {
@@ -9,8 +12,10 @@ self.addEventListener("install", e => {
 
 self.addEventListener("activate", e => {
   e.waitUntil((async () => {
-    for (const k of await caches.keys()) if (k !== キャッシュ名) await caches.delete(k);
-    await self.clients.claim();
+    for (const k of await caches.keys()) if (k !== キャッシュ名 && k !== 音声キャッシュ) await caches.delete(k);
+    // clients.claim() はしない。開いている途中のページを握ると、音声の最初の要求はネット・残りは
+    // ここで作った応答、と届け主が途中で入れ替わり、ブラウザが読み込み失敗（MEDIA_ERR_NETWORK）で止める
+    // （2026-09-24 に本番の初回表示で発生）。2回目の起動から最初から握れば入れ替わりは起きない
   })());
 });
 
@@ -53,7 +58,7 @@ async function 先にキャッシュ(req) {
 // Safari の <audio> は Range 付きで要求してくる。丸ごと 200 で返すと再生できないので、
 // 要求された範囲だけ切り出して 206 で返す
 async function 音声(req) {
-  const c = await caches.open(キャッシュ名);
+  const c = await caches.open(音声キャッシュ);
   const 鍵 = req.url.split("#")[0];
   let res = await c.match(鍵, {ignoreSearch: true});
   if (!res) {
