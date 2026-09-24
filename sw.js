@@ -2,7 +2,7 @@
 // ページの殻（HTML・アイコン）と音声でキャッシュを分ける。
 // 殻はコードを直すたびに v を上げる。音声は中身が変わらない限り上げない（上げると 17MB 取り直しになる）
 // 音声のキャッシュ名はページ側（index.html）と揃える
-const キャッシュ名 = "ted-shell-v4";
+const キャッシュ名 = "ted-shell-v5";
 const 音声キャッシュ = "ted-audio-v2";
 const 殻 = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-512.png"];
 

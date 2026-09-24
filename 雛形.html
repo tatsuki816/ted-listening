@@ -182,6 +182,7 @@ input[type=range]{flex:1; min-width:0; accent-color:var(--mark); height:20px}
       <button class="chip" data-v="one">1文</button>
       <button class="chip" data-v="ab">A–B</button>
       <button class="chip" data-v="seg">区間</button>
+      <button class="chip" data-v="all">全体</button>
     </div>
   </div>
   <div class="settings">
@@ -302,6 +303,7 @@ function 助言(){
     else hint.innerHTML = (st.a+1) + "〜" + (st.b+1) + " を繰り返し中。もう一度タップすると引き直せる";
   } else if(st.loop === "one"){ hint.textContent = "今の1文を繰り返す。文をタップするとそこへ移る";
   } else if(st.loop === "seg"){ hint.textContent = "区間の終わりまで行ったら頭に戻る";
+  } else if(st.loop === "all"){ hint.textContent = "区間1から5まで通して流す。5の後は1に戻る";
   } else { hint.textContent = "文をタップするとそこから再生。字幕なしで聞いて「今の文」で答え合わせ"; }
 }
 
@@ -363,6 +365,12 @@ function 拍(){
 requestAnimationFrame(拍);
 
 audio.addEventListener("ended", () => {
+  if(st.loop === "all"){
+    // 全体：区間の終わりで次の区間へ。区間5の後は区間1に戻る
+    st.seg = st.seg % 5 + 1; しまう(); 描く(); ボタンを揃える();
+    audio.play().catch(()=>{});
+    return;
+  }
   if(st.loop === "seg"){ 戻す(0); if(st.gap === 0) audio.play().catch(()=>{}); }
   else 再生表示(false);
 });
