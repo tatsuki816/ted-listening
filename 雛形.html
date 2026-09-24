@@ -444,7 +444,7 @@ document.addEventListener("keydown", e => {
 
 /* ── 圏外で使う準備 ─────────────────── */
 // sw.js の 音声キャッシュ と揃える（殻のキャッシュとは別。コードを直しても音声は取り直さない）
-const キャッシュ名 = "ted-audio-v1";
+const キャッシュ名 = "ted-audio-v2";
 const 音源一覧 = Object.keys(DATA).map(k => new URL("audio/" + k + ".mp3", location.href).href);
 
 async function 保存状況(){

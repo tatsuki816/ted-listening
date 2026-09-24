@@ -46,7 +46,7 @@ push は個人アカウント `tatsuki816` の HTTPS で行う（この Mac の 
   次の文へ乗り換えて素通りする。ループ中の文は `固定` に持つ
 - **境目の判定を `requestAnimationFrame` だけに頼らない。** iPhone で画面を消すと止まる。
   `timeupdate` と 0.1秒タイマーからも呼んでいる
-- 殻のキャッシュ名（`ted-shell-vN`）は直すたびに上げる。音声（`ted-audio-v1`）は音声が変わらない限り上げない
+- 殻のキャッシュ名（`ted-shell-vN`）は直すたびに上げる。音声（`ted-audio-vN`）は音声が変わらない限り上げない
 - GitHub Pages は `max-age=600`。直した直後の10分は古い版が返ることがある
 
 ## 出典とライセンス
