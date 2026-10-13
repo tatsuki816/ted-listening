@@ -113,6 +113,11 @@ main{flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:6px 0 10
 .line.inrange{background:var(--loop-soft)}
 .line.inrange.now{background:var(--mark-soft)}
 .veil{filter:blur(4.5px); opacity:.55; user-select:none}
+/* かたまりの区切り。区切りが「かたまり」のときだけ / を見せ、今のかたまりを濃く塗る */
+.sl{display:none; color:var(--ink-3); font-weight:400}
+main.slashes .sl{display:inline}
+.ck{border-radius:3px; -webkit-box-decoration-break:clone; box-decoration-break:clone}
+main.slashes .ck.on{background:var(--mark); color:var(--mark-ink); padding:0 2px}
 
 /* ── 下 ───────────────────────────── */
 footer{
@@ -135,6 +140,8 @@ input[type=range]{flex:1; min-width:0; accent-color:var(--mark); height:20px}
 .spacer{flex:1}
 .settings{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
 .settings .chip{padding:4px 9px; font-size:11px}
+/* ラベルとボタンを1組にして、折り返すときは一緒に下の行へ */
+.grp{display:inline-flex; align-items:center; gap:8px}
 #reveal[aria-pressed="true"]{background:var(--loop); border-color:var(--loop); color:#fff}
 @media (max-width:420px){ .en{font-size:17px} }
 </style>
@@ -155,6 +162,15 @@ input[type=range]{flex:1; min-width:0; accent-color:var(--mark); height:20px}
       <button class="chip" data-v="en">英</button>
       <button class="chip" data-v="ja">日</button>
       <button class="chip" data-v="both">英日</button>
+    </div>
+  </div>
+  <div class="rows">
+    <span class="lbl">練習</span>
+    <div class="chips" id="steps">
+      <button class="chip" data-v="imi">① 意味</button>
+      <button class="chip" data-v="rep">② リピート</button>
+      <button class="chip" data-v="ovl">③ 重ねる</button>
+      <button class="chip" data-v="sha">④ シャドー</button>
     </div>
   </div>
 </header>
@@ -179,25 +195,35 @@ input[type=range]{flex:1; min-width:0; accent-color:var(--mark); height:20px}
     <span class="lbl">繰り返し</span>
     <div class="chips" id="loops">
       <button class="chip" data-v="off">流す</button>
-      <button class="chip" data-v="one">1文</button>
+      <button class="chip" data-v="step">止めて進む</button>
+      <button class="chip" data-v="one" id="loop-one">1文</button>
       <button class="chip" data-v="ab">A–B</button>
       <button class="chip" data-v="seg">区間</button>
       <button class="chip" data-v="all">全体</button>
     </div>
   </div>
   <div class="settings">
+    <span class="lbl">区切り</span>
+    <div class="chips" id="units">
+      <button class="chip" data-v="文">文</button>
+      <button class="chip" data-v="塊">かたまり</button>
+    </div>
+  </div>
+  <div class="settings">
     <span class="lbl">速さ</span>
     <div class="chips" id="rates">
+      <button class="chip" data-v="0.6">0.6×</button>
       <button class="chip" data-v="0.7">0.7×</button>
       <button class="chip" data-v="0.85">0.85×</button>
       <button class="chip" data-v="1">1×</button>
     </div>
-    <span class="lbl">間</span>
+    <span class="grp"><span class="lbl">間</span>
     <div class="chips" id="gaps">
       <button class="chip" data-v="0">なし</button>
       <button class="chip" data-v="1.5">1.5秒</button>
       <button class="chip" data-v="3">3秒</button>
-    </div>
+      <button class="chip" data-v="auto">自動</button>
+    </div></span>
   </div>
 </footer>
 
@@ -205,21 +231,36 @@ input[type=range]{flex:1; min-width:0; accent-color:var(--mark); height:20px}
 const DATA = __DATA__;
 
 const 保存キー = "ted-tim-urban-v1";
-let st = {seg:1, subs:"en", loop:"off", rate:1, gap:0, a:null, b:null};
+let st = {seg:1, subs:"en", loop:"off", rate:1, gap:0, unit:"文", step:null, a:null, b:null};
 try{ const r = localStorage.getItem(保存キー); if(r) Object.assign(st, JSON.parse(r)); }catch(e){}
 st.a = null; st.b = null;
 
 const audio = new Audio();
 audio.preload = "metadata";
 let 文 = [], idx = -1, ループ中 = false, 見せる = false, 手で動かした = 0, つまみ中 = false;
-// 1文ループで繰り返している文。idx（今の文）は境目の直前に次へ進むので、ループの的には使えない
+// 単位 = 区切りの1つ1つ。区切りが「文」なら文、「かたまり」なら3〜6語のかたまり。{s, e, i（文の番号）, k（文の中のかたまり番号。文なら -1）}
+let 単位 = [], u = -1;
+// 1つ繰り返す・止めて進む で扱っている単位の番号。u（今の単位）は境目の直前に次へ進むので、ループの的には使えない
 let 固定 = -1;
+let 待ちタイマー = null;
 
 const $ = s => document.querySelector(s);
 const main = $("#main"), hint = $("#hint"), seek = $("#seek");
 
+// シャドーイングの4段階。意味を先に入れてから、言い返す → 重ねる → 追いかける の順に音へ近づく
+const 段階 = {
+  imi: {subs:"both", unit:"文", loop:"step", gap:"auto", rate:0.85,
+        説明:"<strong>① 意味</strong>　英日の字幕で1文ずつ止まる。止まっている間に、英文のどこが日本語のどこか確かめる"},
+  rep: {subs:"en", unit:"塊", loop:"step", gap:"auto", rate:0.85,
+        説明:"<strong>② リピート</strong>　かたまりごとに止まる。止まったら、なるべく英文を見ずに真似して言う。言えなかったら ◀ でもう一度"},
+  ovl: {subs:"en", unit:"文", loop:"one", gap:1.5, rate:0.85,
+        説明:"<strong>③ 重ねる</strong>　英文を見ながら、音と同時に言う。1文を繰り返すので、言えたら ▶ で次の文へ"},
+  sha: {subs:"off", unit:"文", loop:"one", gap:1.5, rate:0.85,
+        説明:"<strong>④ シャドー</strong>　字幕なしで、少し遅れて追いかけて言う。詰まる文は ③ に戻す。慣れたら速さを 1× に"},
+};
+
 function 秒表示(x){ x = Math.max(0, x||0); const m = Math.floor(x/60), s = Math.floor(x%60); return m + ":" + String(s).padStart(2,"0"); }
-function しまう(){ try{ localStorage.setItem(保存キー, JSON.stringify({seg:st.seg, subs:st.subs, loop:st.loop, rate:st.rate, gap:st.gap})); }catch(e){} }
+function しまう(){ try{ localStorage.setItem(保存キー, JSON.stringify({seg:st.seg, subs:st.subs, loop:st.loop, rate:st.rate, gap:st.gap, unit:st.unit, step:st.step})); }catch(e){} }
 
 /* ── 組み立て ───────────────────── */
 (function 区間ボタン(){
@@ -243,14 +284,21 @@ function 描く(){
         '<span class="en"></span>' +
         '<span class="ja"></span>' +
       '</span>';
-    row.querySelector(".en").textContent = s.en;
+    // 英文はかたまりごとに包む。区切りが「かたまり」のときだけ / が見えて、今のかたまりが光る
+    const en = row.querySelector(".en");
+    (s.塊 || [{en: s.en}]).forEach((c, k) => {
+      if(k){ const sl = document.createElement("span"); sl.className = "sl"; sl.textContent = " / "; en.appendChild(sl); }
+      const ck = document.createElement("span"); ck.className = "ck"; ck.dataset.k = k; ck.textContent = c.en;
+      en.appendChild(ck);
+    });
     row.querySelector(".ja").textContent = s.ja;
     main.appendChild(row);
   });
-  idx = -1; 固定 = -1;
+  idx = -1; u = -1; 固定 = -1; 待ちをやめる();
   audio.src = "audio/" + st.seg + ".mp3";
   audio.playbackRate = st.rate;
   st.a = st.b = null;
+  単位を作る();
   字幕を当てる(); 印を塗る(); 助言(); ボタンを揃える();
   $("#tend").textContent = 秒表示(文[文.length-1].e);
   $("#segtitle").textContent = DATA[st.seg].見出し;
@@ -260,6 +308,14 @@ function 描く(){
       artist: "Tim Urban", album: "Inside the Mind of a Master Procrastinator"
     });
   }
+}
+
+function 単位を作る(){
+  単位 = st.unit === "塊"
+    ? 文.flatMap((s, i) => (s.塊 || [{s:s.s, e:s.e}]).map((c, k) => ({s:c.s, e:c.e, i, k: s.塊 ? k : -1})))
+    : 文.map((s, i) => ({s:s.s, e:s.e, i, k:-1}));
+  main.classList.toggle("slashes", st.unit === "塊");
+  u = -1;
 }
 
 function 字幕を当てる(){
@@ -289,19 +345,30 @@ function 印を塗る(){
   });
 }
 
+function 塊を塗る(){
+  main.querySelectorAll(".ck.on").forEach(el => el.classList.remove("on"));
+  const x = 単位[u];
+  if(st.unit !== "塊" || !x || x.k < 0) return;
+  const el = main.querySelector('.line[data-i="' + x.i + '"] .ck[data-k="' + x.k + '"]');
+  if(el) el.classList.add("on");
+}
+
 function ボタンを揃える(){
   const 当てる = (id, v) => document.querySelectorAll("#" + id + " .chip").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v == v)));
   当てる("segs", st.seg); 当てる("subs", st.subs); 当てる("loops", st.loop);
-  当てる("rates", st.rate); 当てる("gaps", st.gap);
+  当てる("rates", st.rate); 当てる("gaps", st.gap); 当てる("units", st.unit); 当てる("steps", st.step);
+  $("#loop-one").textContent = st.unit === "塊" ? "1かたまり" : "1文";
   $("#reveal").setAttribute("aria-pressed", String(見せる));
 }
 
 function 助言(){
+  if(st.step && 段階[st.step]){ hint.innerHTML = 段階[st.step].説明; return; }
   if(st.loop === "ab"){
     if(st.a === null) hint.innerHTML = "繰り返したい範囲の<strong>最初の文</strong>をタップ";
     else if(st.b === null) hint.innerHTML = "次に<strong>最後の文</strong>をタップ（同じ文でもいい）";
     else hint.innerHTML = (st.a+1) + "〜" + (st.b+1) + " を繰り返し中。もう一度タップすると引き直せる";
-  } else if(st.loop === "one"){ hint.textContent = "今の1文を繰り返す。文をタップするとそこへ移る";
+  } else if(st.loop === "one"){ hint.textContent = (st.unit === "塊" ? "今のかたまり" : "今の1文") + "を繰り返す。文をタップするとそこへ移る";
+  } else if(st.loop === "step"){ hint.textContent = (st.unit === "塊" ? "かたまり" : "1文") + "ごとに止まって、間のあと次へ進む。間の「自動」は聞いた長さ＋少し";
   } else if(st.loop === "seg"){ hint.textContent = "区間の終わりまで行ったら頭に戻る";
   } else if(st.loop === "all"){ hint.textContent = "区間1から5まで通して流す。5の後は1に戻る";
   } else { hint.textContent = "文をタップするとそこから再生。字幕なしで聞いて「今の文」で答え合わせ"; }
@@ -309,37 +376,61 @@ function 助言(){
 
 /* ── 動き ───────────────────────── */
 function 今どこ(t){
-  for(let i = 文.length - 1; i >= 0; i--) if(t >= 文[i].s - 0.05) return i;
-  return 0;   // 冒頭の拍手や間はこれから読む文に含める
+  for(let i = 単位.length - 1; i >= 0; i--) if(t >= 単位[i].s - 0.05) return i;
+  return 0;   // 冒頭の拍手や間はこれから読む単位に含める
 }
 
+function 文の頭(i){ const j = 単位.findIndex(x => x.i === i); return j < 0 ? 0 : j; }
+
 function 飛ぶ(秒, 鳴らす){
+  待ちをやめる();
   audio.currentTime = Math.max(0, 秒);
   if(鳴らす !== false) audio.play().catch(()=>{});
 }
 
-function 戻す(秒){
+// 間の長さ。「自動」は聞いた長さ（速さで伸びた分も込み）＋0.8秒。言い返すのに要る時間の目安
+function 間の秒(x){
+  if(st.gap === "auto") return x ? Math.max(1.2, (x.e - x.s) / st.rate + 0.8) : 1.5;
+  return +st.gap || 0;
+}
+
+function 待ちをやめる(){
+  if(待ちタイマー){ clearTimeout(待ちタイマー); 待ちタイマー = null; }
+  ループ中 = false;
+}
+
+// 止めて、待ってから「次」をして鳴らし直す。待ちが 0 なら止めずに「次」だけ
+function 間をあけて(待ち, 次){
   if(ループ中) return;
   ループ中 = true;
-  if(st.gap > 0){
+  if(待ち > 0){
     audio.pause();
-    setTimeout(() => { audio.currentTime = Math.max(0, 秒); audio.play().catch(()=>{}); ループ中 = false; }, st.gap * 1000);
+    待ちタイマー = setTimeout(() => { 待ちタイマー = null; 次(); audio.play().catch(()=>{}); ループ中 = false; }, 待ち * 1000);
   } else {
-    audio.currentTime = Math.max(0, 秒);
-    ループ中 = false;
+    次(); ループ中 = false;
   }
 }
 
-// ループの境目を越えたら戻す。rAF は iPhone で画面を消すと止まるので、
-// timeupdate と 0.1 秒のタイマーからも呼ぶ（どれか1つが生きていれば戻せる）
+// 境目を越えたら戻す・止める。rAF は iPhone で画面を消すと止まるので、
+// timeupdate と 0.1 秒のタイマーからも呼ぶ（どれか1つが生きていれば効く）
 function 境目を見る(){
-  if(ループ中 || audio.paused || !文.length) return;
+  if(ループ中 || audio.paused || !単位.length) return;
   const t = audio.currentTime;
   if(st.loop === "one"){
     if(固定 < 0) 固定 = 今どこ(t);
-    if(t >= 文[固定].e - 0.03 || t < 文[固定].s - 0.3) 戻す(文[固定].s);
+    const x = 単位[固定];
+    if(t >= x.e - 0.03 || t < x.s - 0.3) 間をあけて(間の秒(x), () => { audio.currentTime = x.s; });
+  } else if(st.loop === "step"){
+    if(固定 < 0) 固定 = 今どこ(t);
+    const x = 単位[固定];
+    if(t < x.s - 0.3){ 固定 = 今どこ(t); return; }
+    if(t >= x.e - 0.03){
+      const n = 固定 + 1;
+      if(n >= 単位.length){ audio.pause(); return; }
+      間をあけて(間の秒(x), () => { 固定 = n; audio.currentTime = 単位[n].s; });
+    }
   } else if(st.loop === "ab" && st.a !== null && st.b !== null){
-    if(t >= 文[st.b].e - 0.03 || t < 文[st.a].s - 0.3) 戻す(文[st.a].s);
+    if(t >= 文[st.b].e - 0.03 || t < 文[st.a].s - 0.3) 間をあけて(間の秒(null), () => { audio.currentTime = 文[st.a].s; });
   }
 }
 audio.addEventListener("timeupdate", 境目を見る);
@@ -353,12 +444,16 @@ function 拍(){
     $("#tnow").textContent = 秒表示(t);
   }
   境目を見る();
-  const 新 = (st.loop === "one" && 固定 >= 0) ? 固定 : 今どこ(audio.currentTime);
-  if(新 !== idx){
-    idx = 新; 見せる = false;
-    印を塗る(); 字幕を当てる(); ボタンを揃える();
-    const row = main.querySelector('.line[data-i="' + idx + '"]');
-    if(row && Date.now() - 手で動かした > 5000) row.scrollIntoView({block:"center", behavior:"smooth"});
+  if(単位.length){
+    const 今u = ((st.loop === "one" || st.loop === "step") && 固定 >= 0) ? 固定 : 今どこ(t);
+    if(今u !== u){ u = 今u; 塊を塗る(); }
+    const 新 = 単位[u].i;
+    if(新 !== idx){
+      idx = 新; 見せる = false;
+      印を塗る(); 字幕を当てる(); ボタンを揃える(); 塊を塗る();
+      const row = main.querySelector('.line[data-i="' + idx + '"]');
+      if(row && Date.now() - 手で動かした > 5000) row.scrollIntoView({block:"center", behavior:"smooth"});
+    }
   }
   requestAnimationFrame(拍);
 }
@@ -371,7 +466,7 @@ audio.addEventListener("ended", () => {
     audio.play().catch(()=>{});
     return;
   }
-  if(st.loop === "seg"){ 戻す(0); if(st.gap === 0) audio.play().catch(()=>{}); }
+  if(st.loop === "seg"){ 間をあけて(間の秒(null), () => { audio.currentTime = 0; }); if(!(間の秒(null) > 0)) audio.play().catch(()=>{}); }
   else 再生表示(false);
 });
 audio.addEventListener("play", () => { 再生表示(true); 眠らせない(); });
@@ -400,21 +495,25 @@ main.addEventListener("click", e => {
     else { st.a = i; 飛ぶ(文[i].s); }
     印を塗る(); 助言();
   } else {
-    固定 = i;
-    飛ぶ(文[i].s);
+    固定 = 文の頭(i);
+    飛ぶ(単位[固定].s);
   }
 });
 
-$("#play").addEventListener("click", () => { if(audio.paused) audio.play().catch(()=>{}); else audio.pause(); });
-$("#prev").addEventListener("click", () => {
-  const t = audio.currentTime;
-  if(st.loop === "one" && 固定 >= 0) idx = 固定;
-  const 頭に戻すか = idx >= 0 && t - 文[idx].s > 1.2;
-  const j = 頭に戻すか ? idx : Math.max(0, idx - 1);
-  固定 = j;
-  飛ぶ(文[j].s);
+$("#play").addEventListener("click", () => {
+  // 間の途中で押したら、待ちをやめて止まる（再生ボタンの見た目は鳴っている扱いのままなので）
+  if(ループ中){ 待ちをやめる(); 再生表示(false); return; }
+  if(audio.paused) audio.play().catch(()=>{}); else audio.pause();
 });
-$("#next").addEventListener("click", () => { const j = Math.min(文.length - 1, idx + 1); 固定 = j; 飛ぶ(文[j].s); });
+function 今の単位(){ return ((st.loop === "one" || st.loop === "step") && 固定 >= 0) ? 固定 : 今どこ(audio.currentTime); }
+$("#prev").addEventListener("click", () => {
+  const 今 = 今の単位();
+  const 頭に戻すか = 今 >= 0 && audio.currentTime - 単位[今].s > 1.2;
+  const j = 頭に戻すか ? 今 : Math.max(0, 今 - 1);
+  固定 = j;
+  飛ぶ(単位[j].s);
+});
+$("#next").addEventListener("click", () => { const j = Math.min(単位.length - 1, 今の単位() + 1); 固定 = j; 飛ぶ(単位[j].s); });
 
 seek.addEventListener("pointerdown", () => { つまみ中 = true; });
 seek.addEventListener("change", () => {
@@ -430,14 +529,29 @@ main.addEventListener("scroll", () => { 手で動かした = Date.now(); }, {pas
 function 束ねる(id, 効く){
   document.getElementById(id).addEventListener("click", e => {
     const b = e.target.closest(".chip"); if(!b) return;
-    効く(b.dataset.v); ボタンを揃える(); しまう();
+    // 段階を選んだ後に設定を手で変えたら、段階の印は外す
+    if(id !== "steps" && id !== "segs") st.step = null;
+    効く(b.dataset.v); ボタンを揃える(); 助言(); しまう();
   });
+}
+function 区切りを変える(v){
+  st.unit = v; 単位を作る();
+  固定 = 今どこ(audio.currentTime); 塊を塗る();
 }
 束ねる("segs",  v => { const 鳴ってた = !audio.paused; st.seg = +v; 描く(); if(鳴ってた) audio.play().catch(()=>{}); });
 束ねる("subs",  v => { st.subs = v; 字幕を当てる(); });
-束ねる("loops", v => { st.loop = v; st.a = st.b = null; 固定 = Math.max(0, idx); 印を塗る(); 助言(); });
+束ねる("loops", v => { 待ちをやめる(); st.loop = v; st.a = st.b = null; 固定 = Math.max(0, 今どこ(audio.currentTime)); 印を塗る(); });
 束ねる("rates", v => { st.rate = +v; audio.playbackRate = st.rate; });
-束ねる("gaps",  v => { st.gap = +v; });
+束ねる("gaps",  v => { st.gap = v === "auto" ? "auto" : +v; });
+束ねる("units", v => 区切りを変える(v));
+束ねる("steps", v => {
+  const p = 段階[v]; if(!p) return;
+  待ちをやめる();
+  st.step = v; st.subs = p.subs; st.loop = p.loop; st.gap = p.gap; st.rate = p.rate; st.a = st.b = null;
+  audio.playbackRate = st.rate;
+  区切りを変える(p.unit);
+  字幕を当てる(); 印を塗る();
+});
 
 $("#reveal").addEventListener("click", () => { 見せる = !見せる; 字幕を当てる(); ボタンを揃える(); });
 

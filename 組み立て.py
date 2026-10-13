@@ -16,15 +16,23 @@ import 訳
 見出し = {1: "レポートの先延ばし", 2: "脳の中のサル", 3: "パニック・モンスター",
           4: "TEDの準備", 5: "締切の無い先延ばし"}
 
+# リピーティング用のかたまり（かたまり.py が作る）。英文を直したら かたまり.py も回し直す
+塊 = json.loads((根 / "かたまり.json").read_text())
+
 DATA = {}
 for i in range(1, 6):
     文 = json.loads((元 / f"区間{i}.json").read_text())
     ja = 訳.訳[i]
     if len(文) != len(ja):
         raise SystemExit(f"区間{i}: 英文 {len(文)} 件に対して訳が {len(ja)} 件。訳.py を揃える")
+    if len(文) != len(塊[str(i)]):
+        raise SystemExit(f"区間{i}: 英文 {len(文)} 件に対してかたまりが {len(塊[str(i)])} 文分。かたまり.py を回し直す")
+    for n, s in enumerate(文):
+        if " ".join(c["en"] for c in 塊[str(i)][n]) != " ".join(s["text"].split()):
+            raise SystemExit(f"区間{i} {n+1}文目: かたまりをつないでも英文と一致しない。かたまり.py を回し直す")
     DATA[str(i)] = {"見出し": 見出し[i],
                     "文": [{"s": round(s["start"], 2), "e": round(s["end"], 2),
-                            "en": s["text"].strip(), "ja": ja[n]} for n, s in enumerate(文)]}
+                            "en": s["text"].strip(), "ja": ja[n], "塊": 塊[str(i)][n]} for n, s in enumerate(文)]}
 
 雛形 = (根 / "雛形.html").read_text()
 if "__DATA__" not in 雛形:
