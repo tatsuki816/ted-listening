@@ -384,7 +384,12 @@ function 文の頭(i){ const j = 単位.findIndex(x => x.i === i); return j < 0 
 
 function 飛ぶ(秒, 鳴らす){
   待ちをやめる();
-  audio.currentTime = Math.max(0, 秒);
+  秒 = Math.max(0, 秒);
+  audio.currentTime = 秒;
+  // 飛んだ直後も古い位置が返ることがあり、境目を越えたと見て止まったり、
+  // 止めて進むでタップしたかたまりを飛ばしたりした。着くまで見張りを止めておく
+  ループ中 = true;
+  着くまで待つ(秒, 世代);
   if(鳴らす !== false) audio.play().catch(()=>{});
 }
 
@@ -394,32 +399,57 @@ function 間の秒(x){
   return +st.gap || 0;
 }
 
+let 世代 = 0;   // 待ちをやめたら上がる。古い待ちが後から ループ中 を下ろさないように
+
 function 待ちをやめる(){
   if(待ちタイマー){ clearTimeout(待ちタイマー); 待ちタイマー = null; }
+  世代++;
   ループ中 = false;
 }
 
-// 止めて、待ってから「次」をして鳴らし直す。待ちが 0 なら止めずに「次」だけ
-function 間をあけて(待ち, 次){
+// 止めて、待ってから「的」の秒へ戻して鳴らし直す。待ちが 0 なら止めずに戻すだけ。
+// 準備 は戻す直前にすること（固定 を次へ進めるなど）
+function 間をあけて(待ち, 的, 準備){
   if(ループ中) return;
   ループ中 = true;
+  const 私 = 世代;
+  const 戻す = () => {
+    if(準備) 準備();
+    audio.currentTime = Math.max(0, 的);
+    if(待ち > 0) audio.play().catch(()=>{});
+    着くまで待つ(的, 私);
+  };
   if(待ち > 0){
     audio.pause();
-    待ちタイマー = setTimeout(() => { 待ちタイマー = null; 次(); audio.play().catch(()=>{}); ループ中 = false; }, 待ち * 1000);
+    待ちタイマー = setTimeout(() => { 待ちタイマー = null; if(私 === 世代) 戻す(); }, 待ち * 1000);
   } else {
-    次(); ループ中 = false;
+    戻す();
   }
+}
+
+// iPhone の Safari は、戻す位置を指定してから読み込みが終わるまで currentTime が古い位置を返すことがある。
+// すぐ見張りを再開すると、古い位置を見て「文の終わりを越えた」ともう一度止まり、間が2回分空いた（2026-10-13 本人報告）。
+// 戻した位置に本当に着いたのを見てから ループ中 を下ろす。2秒たっても着かなければ諦めて下ろす
+function 着くまで待つ(的, 私){
+  const 始 = Date.now();
+  const 見る = () => {
+    if(私 !== 世代) return;
+    const 着いた = !audio.seeking && Math.abs(audio.currentTime - 的) < 0.6;
+    if(着いた || Date.now() - 始 > 2000){ ループ中 = false; return; }
+    setTimeout(見る, 50);
+  };
+  見る();
 }
 
 // 境目を越えたら戻す・止める。rAF は iPhone で画面を消すと止まるので、
 // timeupdate と 0.1 秒のタイマーからも呼ぶ（どれか1つが生きていれば効く）
 function 境目を見る(){
-  if(ループ中 || audio.paused || !単位.length) return;
+  if(ループ中 || audio.paused || audio.seeking || !単位.length) return;
   const t = audio.currentTime;
   if(st.loop === "one"){
     if(固定 < 0) 固定 = 今どこ(t);
     const x = 単位[固定];
-    if(t >= x.e - 0.03 || t < x.s - 0.3) 間をあけて(間の秒(x), () => { audio.currentTime = x.s; });
+    if(t >= x.e - 0.03 || t < x.s - 0.3) 間をあけて(間の秒(x), x.s);
   } else if(st.loop === "step"){
     if(固定 < 0) 固定 = 今どこ(t);
     const x = 単位[固定];
@@ -427,10 +457,10 @@ function 境目を見る(){
     if(t >= x.e - 0.03){
       const n = 固定 + 1;
       if(n >= 単位.length){ audio.pause(); return; }
-      間をあけて(間の秒(x), () => { 固定 = n; audio.currentTime = 単位[n].s; });
+      間をあけて(間の秒(x), 単位[n].s, () => { 固定 = n; });
     }
   } else if(st.loop === "ab" && st.a !== null && st.b !== null){
-    if(t >= 文[st.b].e - 0.03 || t < 文[st.a].s - 0.3) 間をあけて(間の秒(null), () => { audio.currentTime = 文[st.a].s; });
+    if(t >= 文[st.b].e - 0.03 || t < 文[st.a].s - 0.3) 間をあけて(間の秒(null), 文[st.a].s);
   }
 }
 audio.addEventListener("timeupdate", 境目を見る);
@@ -466,7 +496,7 @@ audio.addEventListener("ended", () => {
     audio.play().catch(()=>{});
     return;
   }
-  if(st.loop === "seg"){ 間をあけて(間の秒(null), () => { audio.currentTime = 0; }); if(!(間の秒(null) > 0)) audio.play().catch(()=>{}); }
+  if(st.loop === "seg"){ 間をあけて(間の秒(null), 0); if(!(間の秒(null) > 0)) audio.play().catch(()=>{}); }
   else 再生表示(false);
 });
 audio.addEventListener("play", () => { 再生表示(true); 眠らせない(); });
@@ -502,8 +532,8 @@ main.addEventListener("click", e => {
 
 $("#play").addEventListener("click", () => {
   // 間の途中で押したら、待ちをやめて止まる（再生ボタンの見た目は鳴っている扱いのままなので）
-  if(ループ中){ 待ちをやめる(); 再生表示(false); return; }
-  if(audio.paused) audio.play().catch(()=>{}); else audio.pause();
+  if(ループ中 && audio.paused){ 待ちをやめる(); 再生表示(false); return; }
+  if(audio.paused) audio.play().catch(()=>{}); else { 待ちをやめる(); audio.pause(); }
 });
 function 今の単位(){ return ((st.loop === "one" || st.loop === "step") && 固定 >= 0) ? 固定 : 今どこ(audio.currentTime); }
 $("#prev").addEventListener("click", () => {
