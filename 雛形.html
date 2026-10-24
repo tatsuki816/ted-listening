@@ -126,6 +126,19 @@ footer{
 }
 .hint{font-size:11px; color:var(--ink-3); min-height:14px; line-height:1.3}
 .hint strong{color:var(--loop); font-weight:600}
+.stepper{display:inline-flex; align-items:center; gap:2px}
+.stepper .chip{min-width:28px; text-align:center}
+.stepper .val{font-size:12px; min-width:3.6em; text-align:center; font-variant-numeric:tabular-nums}
+.w{border-radius:3px}
+main.dict .w{cursor:pointer}
+.w.sel{background:var(--loop-soft); box-shadow:0 0 0 1px var(--loop)}
+.dictpop{border:1px solid var(--rule); border-radius:8px; padding:8px 10px; font-family:var(--jp); font-size:13px; line-height:1.45; background:var(--surface); max-height:30vh; overflow:auto}
+.dictpop[hidden]{display:none}
+.dictpop b{font-size:15px; margin-right:6px}
+.dictpop .lem{font-size:11px; color:var(--ink-3)}
+.dictpop ol{margin:4px 0 0; padding-left:1.3em}
+#dict, #reveal{white-space:nowrap}
+#dict[aria-pressed="true"]{background:var(--loop); border-color:var(--loop); color:#fff}
 .gapcount{font-size:12px; color:var(--loop); font-variant-numeric:tabular-nums; min-width:5.5em}
 .seekrow{display:flex; align-items:center; gap:10px}
 .t{font-size:11px; color:var(--ink-2); font-variant-numeric:tabular-nums; flex:none; letter-spacing:.02em}
@@ -183,6 +196,7 @@ input[type=range]{flex:1; min-width:0; accent-color:var(--mark); height:20px}
 <main id="main"></main>
 
 <footer>
+  <div class="dictpop" id="dictpop" hidden></div>
   <div class="hint" id="hint"></div>
   <div class="seekrow">
     <span class="t" id="tnow">0:00</span>
@@ -195,6 +209,7 @@ input[type=range]{flex:1; min-width:0; accent-color:var(--mark); height:20px}
     <button class="tbtn" id="next" aria-label="次の文"><svg viewBox="0 0 24 24"><path d="M15 6h2v12h-2zM6 6l8 6-8 6z"/></svg></button>
     <span class="gapcount" id="gapcount"></span>
     <span class="spacer"></span>
+    <button class="chip" id="dict" aria-pressed="false">辞書</button>
     <button class="chip" id="reveal" aria-pressed="false">今の文を見る</button>
   </div>
   <div class="settings">
@@ -217,17 +232,17 @@ input[type=range]{flex:1; min-width:0; accent-color:var(--mark); height:20px}
   </div>
   <div class="settings">
     <span class="lbl">速さ</span>
+    <span class="stepper" id="ratestep"><button class="chip" data-d="-0.05" aria-label="遅く">−</button><span class="val" id="rateval"></span><button class="chip" data-d="0.05" aria-label="速く">＋</button></span>
     <div class="chips" id="rates">
-      <button class="chip" data-v="0.6">0.6×</button>
-      <button class="chip" data-v="0.7">0.7×</button>
-      <button class="chip" data-v="0.85">0.85×</button>
+      <button class="chip" data-v="0.5">0.5×</button>
+      <button class="chip" data-v="0.75">0.75×</button>
       <button class="chip" data-v="1">1×</button>
+      <button class="chip" data-v="1.25">1.25×</button>
     </div>
     <span class="grp"><span class="lbl">間</span>
+    <span class="stepper" id="gapstep"><button class="chip" data-d="-0.5" aria-label="間を短く">−</button><span class="val" id="gapval"></span><button class="chip" data-d="0.5" aria-label="間を長く">＋</button></span>
     <div class="chips" id="gaps">
       <button class="chip" data-v="0">なし</button>
-      <button class="chip" data-v="1.5">1.5秒</button>
-      <button class="chip" data-v="3">3秒</button>
       <button class="chip" data-v="auto">自動</button>
     </div></span>
   </div>
@@ -235,9 +250,11 @@ input[type=range]{flex:1; min-width:0; accent-color:var(--mark); height:20px}
 
 <script>
 const DATA = __DATA__;
+// 単語の意味（辞書.py が作る）。{正規化した語: {h: 見出し語, m: [意味]}}
+const DICT = __DICT__;
 
 const 保存キー = "ted-tim-urban-v1";
-let st = {talk:"urban", seg:1, 区間の記憶:{}, subs:"en", loop:"off", rate:1, gap:0, unit:"文", step:null, a:null, b:null};
+let st = {talk:"urban", seg:1, 区間の記憶:{}, dict:false, subs:"en", loop:"off", rate:1, gap:0, unit:"文", step:null, a:null, b:null};
 try{ const r = localStorage.getItem(保存キー); if(r) Object.assign(st, JSON.parse(r)); }catch(e){}
 st.a = null; st.b = null;
 if(!DATA[st.talk]) st.talk = Object.keys(DATA)[0];
@@ -273,7 +290,7 @@ const 段階 = {
 };
 
 function 秒表示(x){ x = Math.max(0, x||0); const m = Math.floor(x/60), s = Math.floor(x%60); return m + ":" + String(s).padStart(2,"0"); }
-function しまう(){ st.区間の記憶[st.talk] = st.seg; try{ localStorage.setItem(保存キー, JSON.stringify({talk:st.talk, seg:st.seg, 区間の記憶:st.区間の記憶, subs:st.subs, loop:st.loop, rate:st.rate, gap:st.gap, unit:st.unit, step:st.step})); }catch(e){} }
+function しまう(){ st.区間の記憶[st.talk] = st.seg; try{ localStorage.setItem(保存キー, JSON.stringify({talk:st.talk, seg:st.seg, 区間の記憶:st.区間の記憶, dict:st.dict, subs:st.subs, loop:st.loop, rate:st.rate, gap:st.gap, unit:st.unit, step:st.step})); }catch(e){} }
 
 /* ── 組み立て ───────────────────── */
 (function トークボタン(){
@@ -322,13 +339,19 @@ function 描く(){
     (s.塊 || [{en: s.en}]).forEach((c, k) => {
       // 区切りが「文」のときは / を隠すので、語と語の間の空白は / の外に置く（中に入れていて語がくっついていた）
       if(k){ en.appendChild(document.createTextNode(" ")); const sl = document.createElement("span"); sl.className = "sl"; sl.textContent = "/ "; en.appendChild(sl); }
-      const ck = document.createElement("span"); ck.className = "ck"; ck.dataset.k = k; ck.textContent = c.en;
+      const ck = document.createElement("span"); ck.className = "ck"; ck.dataset.k = k;
+      // 辞書で引けるように1語ずつ包む
+      c.en.split(" ").forEach((語, j) => {
+        if(j) ck.appendChild(document.createTextNode(" "));
+        const w = document.createElement("span"); w.className = "w"; w.textContent = 語;
+        ck.appendChild(w);
+      });
       en.appendChild(ck);
     });
     row.querySelector(".ja").textContent = s.ja;
     main.appendChild(row);
   });
-  idx = -1; u = -1; 固定 = -1; 待ちをやめる();
+  idx = -1; u = -1; 固定 = -1; 待ちをやめる(); 意味を閉じる();
   audio.src = 音声の場所(st.talk, st.seg);
   audio.playbackRate = st.rate;
   st.a = st.b = null;
@@ -393,9 +416,14 @@ function ボタンを揃える(){
   当てる("rates", st.rate); 当てる("gaps", st.gap); 当てる("units", st.unit); 当てる("steps", st.step);
   $("#loop-one").textContent = st.unit === "塊" ? "1かたまり" : "1文";
   $("#reveal").setAttribute("aria-pressed", String(見せる));
+  $("#dict").setAttribute("aria-pressed", String(st.dict));
+  main.classList.toggle("dict", st.dict);
+  $("#rateval").textContent = st.rate.toFixed(2) + "×";
+  $("#gapval").textContent = st.gap === "auto" ? "自動" : (+st.gap).toFixed(1) + "秒";
 }
 
 function 助言(){
+  if(st.dict){ hint.innerHTML = "<strong>辞書</strong>　単語をタップすると意味が出る（再生位置は動かない）。窓をタップすると閉じる"; return; }
   if(st.step && 段階[st.step]){ hint.innerHTML = 段階[st.step].説明; return; }
   if(st.loop === "ab"){
     if(st.a === null) hint.innerHTML = "繰り返したい範囲の<strong>最初の文</strong>をタップ";
@@ -567,6 +595,8 @@ document.addEventListener("visibilitychange", () => { if(document.visibilityStat
 
 /* ── 操作 ───────────────────────── */
 main.addEventListener("click", e => {
+  // 辞書がオンなら、単語のタップは意味を出すだけ（再生位置は動かさない）
+  if(st.dict){ const w = e.target.closest(".w"); if(w){ 意味を出す(w); return; } }
   const row = e.target.closest(".line"); if(!row) return;
   const i = +row.dataset.i;
   if(st.loop === "ab"){
@@ -638,6 +668,39 @@ function 区切りを変える(v){
   audio.playbackRate = st.rate;
   区切りを変える(p.unit);
   字幕を当てる(); 印を塗る();
+});
+
+function 正規化(語){
+  // 辞書.py の 正規化 と同じ形にそろえる
+  return 語.toLowerCase().replace(/[’‘]/g, "'").replace(/^[^a-z0-9']+|[^a-z0-9']+$/g, "").replace(/^'+|'+$/g, "");
+}
+function 意味を出す(w){
+  const pop = $("#dictpop");
+  main.querySelectorAll(".w.sel").forEach(x => x.classList.remove("sel"));
+  w.classList.add("sel");
+  const k = 正規化(w.textContent), d = DICT[k];
+  pop.innerHTML = "";
+  const b = document.createElement("b"); b.textContent = w.textContent.replace(/^[^A-Za-z0-9']+|[^A-Za-z0-9']+$/g, ""); pop.appendChild(b);
+  if(d && d.h !== k){ const l = document.createElement("span"); l.className = "lem"; l.textContent = "（" + d.h + " の形）"; pop.appendChild(l); }
+  const ol = document.createElement("ol");
+  (d ? d.m : ["辞書に無い語"]).forEach(m => { const li = document.createElement("li"); li.textContent = m; ol.appendChild(li); });
+  pop.appendChild(ol);
+  pop.hidden = false;
+}
+function 意味を閉じる(){ $("#dictpop").hidden = true; main.querySelectorAll(".w.sel").forEach(x => x.classList.remove("sel")); }
+$("#dictpop").addEventListener("click", 意味を閉じる);
+$("#dict").addEventListener("click", () => { st.dict = !st.dict; if(!st.dict) 意味を閉じる(); ボタンを揃える(); 助言(); しまう(); });
+
+// 速さと間のつまみ。速さは 0.5〜1.5 倍を 0.05 刻み、間は 0〜10 秒を 0.5 秒刻み
+$("#ratestep").addEventListener("click", e => {
+  const b = e.target.closest(".chip"); if(!b) return;
+  st.rate = Math.min(1.5, Math.max(0.5, Math.round((st.rate + +b.dataset.d) * 100) / 100));
+  audio.playbackRate = st.rate; st.step = null; ボタンを揃える(); 助言(); しまう();
+});
+$("#gapstep").addEventListener("click", e => {
+  const b = e.target.closest(".chip"); if(!b) return;
+  const 今 = st.gap === "auto" ? 1.5 : +st.gap;
+  st.gap = Math.min(10, Math.max(0, Math.round((今 + +b.dataset.d) * 10) / 10)); st.step = null; ボタンを揃える(); 助言(); しまう();
 });
 
 $("#reveal").addEventListener("click", () => { 見せる = !見せる; 字幕を当てる(); ボタンを揃える(); });

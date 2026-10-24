@@ -40,35 +40,42 @@ def 訳を読む(p):
                           6: "ウォームアップと締め"}},
 }
 
-# リピーティング用のかたまり（かたまり.py が作る）
-塊 = json.loads((根 / "かたまり.json").read_text())
-
-DATA = {}
-全文数 = 0
-for 名, t in トーク.items():
-    訳 = 訳を読む(t["訳"])
-    区間 = {}
-    for i in t["見出し"]:
-        文 = json.loads((t["データ"] / f"区間{i}.json").read_text())
-        ja = 訳[i]
-        塊i = 塊[名][str(i)]
-        if len(文) != len(ja):
-            raise SystemExit(f"{名} 区間{i}: 英文 {len(文)} 件に対して訳が {len(ja)} 件。訳を揃える")
-        if len(文) != len(塊i):
-            raise SystemExit(f"{名} 区間{i}: 英文 {len(文)} 件に対してかたまりが {len(塊i)} 文分。かたまり.py を回し直す")
-        for n, s in enumerate(文):
-            if " ".join(c["en"] for c in 塊i[n]) != " ".join(s["text"].split()):
-                raise SystemExit(f"{名} 区間{i} {n+1}文目: かたまりをつないでも英文と一致しない。かたまり.py を回し直す")
+def データを作る():
+    # リピーティング用のかたまり（かたまり.py が作る）
+    塊 = json.loads((根 / "かたまり.json").read_text())
+    DATA = {}
+    for 名, t in トーク.items():
+        訳 = 訳を読む(t["訳"])
+        区間 = {}
+        for i in t["見出し"]:
+            文 = json.loads((t["データ"] / f"区間{i}.json").read_text())
+            ja = 訳[i]
+            塊i = 塊[名][str(i)]
+            if len(文) != len(ja):
+                raise SystemExit(f"{名} 区間{i}: 英文 {len(文)} 件に対して訳が {len(ja)} 件。訳を揃える")
+            if len(文) != len(塊i):
+                raise SystemExit(f"{名} 区間{i}: 英文 {len(文)} 件に対してかたまりが {len(塊i)} 文分。かたまり.py を回し直す")
+            for n, s in enumerate(文):
+                if " ".join(c["en"] for c in 塊i[n]) != " ".join(s["text"].split()):
+                    raise SystemExit(f"{名} 区間{i} {n+1}文目: かたまりをつないでも英文と一致しない。かたまり.py を回し直す")
             if not (根 / t["音声"].format(n=i)).exists():
                 raise SystemExit(f"{名} 区間{i}: 音声 {t['音声'].format(n=i)} が無い")
-        区間[str(i)] = {"見出し": t["見出し"][i],
-                       "文": [{"s": round(s["start"], 2), "e": round(s["end"], 2),
-                              "en": s["text"].strip(), "ja": ja[n], "塊": 塊i[n]} for n, s in enumerate(文)]}
-        全文数 += len(文)
-    DATA[名] = {k: t[k] for k in ("話者", "題", "年", "wpm", "出典", "音声")} | {"区間": 区間}
+            区間[str(i)] = {"見出し": t["見出し"][i],
+                           "文": [{"s": round(s["start"], 2), "e": round(s["end"], 2),
+                                  "en": s["text"].strip(), "ja": ja[n], "塊": 塊i[n]} for n, s in enumerate(文)]}
+        DATA[名] = {k: t[k] for k in ("話者", "題", "年", "wpm", "出典", "音声")} | {"区間": 区間}
+    return DATA
 
-雛形 = (根 / "雛形.html").read_text()
-if "__DATA__" not in 雛形:
-    raise SystemExit("雛形.html に __DATA__ が無い")
-(根 / "index.html").write_text(雛形.replace("__DATA__", json.dumps(DATA, ensure_ascii=False)))
-print(f"index.html を作った（{len(DATA)} トーク・{全文数} 文）")
+
+if __name__ == "__main__":
+    DATA = データを作る()
+    # 単語をタップしたときの意味（辞書.py が作る）。英文を直したら 辞書.py も回し直す
+    辞書 = json.loads((根 / "辞書.json").read_text())
+    雛形 = (根 / "雛形.html").read_text()
+    for 印 in ("__DATA__", "__DICT__"):
+        if 印 not in 雛形:
+            raise SystemExit(f"雛形.html に {印} が無い")
+    (根 / "index.html").write_text(雛形.replace("__DATA__", json.dumps(DATA, ensure_ascii=False))
+                                   .replace("__DICT__", json.dumps(辞書, ensure_ascii=False, separators=(",", ":"))))
+    文数 = sum(len(区["文"]) for t in DATA.values() for 区 in t["区間"].values())
+    print(f"index.html を作った（{len(DATA)} トーク・{文数} 文・辞書 {len(辞書)} 語）")
