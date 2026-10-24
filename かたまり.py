@@ -4,6 +4,8 @@
   ~/音声入力/.venv/bin/python3 かたまり.py          # 区切って かたまり.json を書く
   ~/音声入力/.venv/bin/python3 かたまり.py --見る   # 区切り方を全部表示する（書き込まない）
 
+トークが増えたら下の トーク に足す。かたまり.json は {トーク名: {区間: [...]}} の形。
+
 whisper の単語ごとの時刻は 単語の時刻/区間N.json に貯める（2回目からは whisper を回さない。
 音声を切り直したらこのフォルダを消してから回す）。
 区切る場所は、句読点の後・接続詞や関係詞の前・話し手が息を継いだ所。長すぎるかたまりは前置詞の前で割る。
@@ -17,8 +19,13 @@ from difflib import SequenceMatcher
 from pathlib import Path
 
 根 = Path(__file__).parent
-元 = Path.home() / "Documents/obsidian/法政大学2年/英語ライティング/リスニング/データ"
-単語の置き場 = 根 / "単語の時刻"
+# トークごとの置き場。urban は前からある vault のデータ、treasure 以降は トーク準備.py が作る
+トーク = {
+    "urban": {"データ": Path.home() / "Documents/obsidian/法政大学2年/英語ライティング/リスニング/データ",
+              "単語": 根 / "単語の時刻", "音声": "audio/{n}.mp3", "区間数": 5},
+    "treasure": {"データ": 根 / "トーク/treasure/データ", "単語": 根 / "トーク/treasure/単語の時刻",
+                 "音声": "audio/treasure/{n}.mp3", "区間数": 6},
+}
 モデル = "mlx-community/whisper-large-v3-turbo"
 
 # この語の前で切ってよい（後ろに節や句が続く目印）
@@ -51,12 +58,13 @@ def 語に割る(s):
     return re.findall(r"[a-z0-9']+", s)
 
 
-def 単語の時刻(区間):
+def 単語の時刻(名, 区間):
+    単語の置き場 = トーク[名]["単語"]
     p = 単語の置き場 / f"区間{区間}.json"
     if p.exists():
         return json.loads(p.read_text())
     import mlx_whisper
-    r = mlx_whisper.transcribe(str(根 / f"audio/{区間}.mp3"), path_or_hf_repo=モデル, language="en",
+    r = mlx_whisper.transcribe(str(根 / トーク[名]["音声"].format(n=区間)), path_or_hf_repo=モデル, language="en",
                                word_timestamps=True, condition_on_previous_text=False)
     聞 = [[t, round(w["start"], 3), round(w["end"], 3)]
          for seg in r["segments"] for w in seg.get("words", []) for t in 語に割る(w["word"])]
@@ -65,9 +73,9 @@ def 単語の時刻(区間):
     return 聞
 
 
-def 区切る(区間):
-    文 = json.loads((元 / f"区間{区間}.json").read_text())
-    聞 = 単語の時刻(区間)
+def 区切る(名, 区間):
+    文 = json.loads((トーク[名]["データ"] / f"区間{区間}.json").read_text())
+    聞 = 単語の時刻(名, 区間)
 
     # 表示用の語（空白区切り）と、照合用の語（語に割る）の対応を作る
     表 = []   # 文ごとに [(表示の語, [照合の語の通し番号])]
@@ -191,16 +199,18 @@ def 区切る(区間):
 if __name__ == "__main__":
     全部 = {}
     語数 = []
-    for 区間 in range(1, 6):
-        結果, 一致率 = 区切る(区間)
-        全部[str(区間)] = 結果
-        塊数 = sum(len(r) for r in 結果)
-        語数 += [len(c["en"].split()) for r in 結果 for c in r]
-        壊れ = [(i + 1, c["en"]) for i, r in enumerate(結果) for c in r if c["e"] - c["s"] < 0.25]
-        print(f"区間{区間}: {len(結果)}文 → {塊数}かたまり  単語の一致率 {一致率:.0%}  短すぎる時刻 {壊れ or 'なし'}")
-        if "--見る" in sys.argv:
-            for i, r in enumerate(結果):
-                print(f"  {i+1:>2}  " + " / ".join(c["en"] for c in r))
+    for 名, 設定 in トーク.items():
+        全部[名] = {}
+        for 区間 in range(1, 設定["区間数"] + 1):
+            結果, 一致率 = 区切る(名, 区間)
+            全部[名][str(区間)] = 結果
+            塊数 = sum(len(r) for r in 結果)
+            語数 += [len(c["en"].split()) for r in 結果 for c in r]
+            壊れ = [(i + 1, c["en"]) for i, r in enumerate(結果) for c in r if c["e"] - c["s"] < 0.25]
+            print(f"{名} 区間{区間}: {len(結果)}文 → {塊数}かたまり  単語の一致率 {一致率:.0%}  短すぎる時刻 {壊れ or 'なし'}")
+            if "--見る" in sys.argv:
+                for i, r in enumerate(結果):
+                    print(f"  {i+1:>2}  " + " / ".join(c["en"] for c in r))
     print(f"1かたまりの語数  中央値 {statistics.median(語数)}  最大 {max(語数)}  1語だけ {語数.count(1)}")
     if "--見る" not in sys.argv:
         (根 / "かたまり.json").write_text(json.dumps(全部, ensure_ascii=False, indent=0))

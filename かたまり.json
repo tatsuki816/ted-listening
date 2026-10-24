@@ -1,4 +1,5 @@
 {
+"urban": {
 "1": [
 [
 {
@@ -2683,4 +2684,2190 @@
 }
 ]
 ]
+},
+"treasure": {
+"1": [
+[
+{
+"en": "The human voice:",
+"s": 0.8,
+"e": 2.17
+},
+{
+"en": "It's the instrument we all play.",
+"s": 2.84,
+"e": 4.71
+}
+],
+[
+{
+"en": "It's the most powerful",
+"s": 5.44,
+"e": 6.67
+},
+{
+"en": "sound in the world, probably.",
+"s": 6.67,
+"e": 7.61
+}
+],
+[
+{
+"en": "It's the only one that can start",
+"s": 7.61,
+"e": 8.85
+},
+{
+"en": "a war or say \"I love you.\"",
+"s": 8.85,
+"e": 10.63
+}
+],
+[
+{
+"en": "And yet many people have the experience",
+"s": 10.8,
+"e": 12.67
+},
+{
+"en": "that when they speak,",
+"s": 12.67,
+"e": 13.63
+},
+{
+"en": "people don't listen to them.",
+"s": 13.63,
+"e": 15.05
+}
+],
+[
+{
+"en": "And why is that?",
+"s": 15.26,
+"e": 16.38
+}
+],
+[
+{
+"en": "How can we speak powerfully",
+"s": 16.38,
+"e": 17.97
+},
+{
+"en": "to make change in the world?",
+"s": 17.97,
+"e": 20.31
+}
+],
+[
+{
+"en": "What I'd like to suggest,",
+"s": 20.42,
+"e": 21.81
+},
+{
+"en": "there are a number of habits",
+"s": 21.81,
+"e": 23.09
+},
+{
+"en": "that we need to move away from.",
+"s": 23.09,
+"e": 24.16
+}
+],
+[
+{
+"en": "I've assembled for your pleasure",
+"s": 24.16,
+"e": 26.51
+},
+{
+"en": "here seven deadly sins of speaking.",
+"s": 26.51,
+"e": 28.35
+}
+],
+[
+{
+"en": "I'm not pretending",
+"s": 28.35,
+"e": 29.49
+},
+{
+"en": "this is an exhaustive list,",
+"s": 29.49,
+"e": 30.75
+},
+{
+"en": "but these seven,",
+"s": 30.75,
+"e": 32.29
+},
+{
+"en": "I think,",
+"s": 32.29,
+"e": 32.63
+},
+{
+"en": "are pretty large",
+"s": 32.63,
+"e": 33.53
+},
+{
+"en": "habits that we can all fall into.",
+"s": 33.86,
+"e": 35.99
+}
+],
+[
+{
+"en": "First, gossip.",
+"s": 35.99,
+"e": 38.37
+}
+],
+[
+{
+"en": "Speaking ill of somebody who's not present.",
+"s": 38.84,
+"e": 41.25
+}
+],
+[
+{
+"en": "Not a nice habit,",
+"s": 41.48,
+"e": 42.77
+},
+{
+"en": "and we know perfectly",
+"s": 42.77,
+"e": 43.67
+},
+{
+"en": "well the person gossiping,",
+"s": 43.67,
+"e": 44.77
+},
+{
+"en": "five minutes later,",
+"s": 44.77,
+"e": 45.87
+},
+{
+"en": "will be gossiping about us.",
+"s": 45.87,
+"e": 47.99
+}
+],
+[
+{
+"en": "Second, judging.",
+"s": 48.64,
+"e": 50.19
+}
+],
+[
+{
+"en": "We know people",
+"s": 50.26,
+"e": 51.31
+},
+{
+"en": "who are like this in conversation,",
+"s": 51.31,
+"e": 52.91
+},
+{
+"en": "and it's very hard to listen",
+"s": 52.91,
+"e": 54.05
+},
+{
+"en": "to somebody if you know",
+"s": 54.05,
+"e": 55.75
+},
+{
+"en": "that you're being judged",
+"s": 55.75,
+"e": 56.65
+},
+{
+"en": "and found wanting at the same time.",
+"s": 56.65,
+"e": 58.89
+}
+],
+[
+{
+"en": "Third, negativity.",
+"s": 59.64,
+"e": 60.81
+}
+],
+[
+{
+"en": "You can fall into this.",
+"s": 61.24,
+"e": 62.74
+}
+],
+[
+{
+"en": "My mother,",
+"s": 62.74,
+"e": 63.41
+},
+{
+"en": "in the last years of her life,",
+"s": 63.41,
+"e": 64.55
+},
+{
+"en": "became very negative,",
+"s": 64.55,
+"e": 65.75
+},
+{
+"en": "and it's hard to listen.",
+"s": 65.75,
+"e": 66.55
+}
+],
+[
+{
+"en": "I remember one day,",
+"s": 66.55,
+"e": 67.53
+},
+{
+"en": "I said to her,",
+"s": 67.53,
+"e": 68.11
+},
+{
+"en": "\"It's October 1 today,\" and she said,",
+"s": 68.11,
+"e": 70.25
+},
+{
+"en": "\"I know,",
+"s": 70.25,
+"e": 70.59
+},
+{
+"en": "isn't it dreadful?\"",
+"s": 70.59,
+"e": 71.49
+}
+],
+[
+{
+"en": "It's hard to listen",
+"s": 74.02,
+"e": 75.37
+},
+{
+"en": "when somebody's that negative.",
+"s": 75.37,
+"e": 76.75
+}
+]
+],
+"2": [
+[
+{
+"en": "And another form of negativity, complaining.",
+"s": 0.8,
+"e": 3.71
+}
+],
+[
+{
+"en": "Well, this is the national",
+"s": 3.88,
+"e": 5.65
+},
+{
+"en": "art of the U.K.",
+"s": 5.65,
+"e": 7.03
+}
+],
+[
+{
+"en": "It's our national sport.",
+"s": 7.46,
+"e": 9.1
+}
+],
+[
+{
+"en": "We complain about the weather,",
+"s": 9.1,
+"e": 10.25
+},
+{
+"en": "sport, about politics,",
+"s": 10.4,
+"e": 11.59
+},
+{
+"en": "about everything,",
+"s": 11.59,
+"e": 12.19
+},
+{
+"en": "but actually,",
+"s": 12.19,
+"e": 12.91
+},
+{
+"en": "complaining is viral misery.",
+"s": 12.91,
+"e": 14.44
+}
+],
+[
+{
+"en": "It's not spreading sunshine",
+"s": 14.44,
+"e": 16.17
+},
+{
+"en": "and lightness in the world.",
+"s": 16.17,
+"e": 17.61
+}
+],
+[
+{
+"en": "Excuses.",
+"s": 18.92,
+"e": 19.85
+}
+],
+[
+{
+"en": "We've all met this guy.",
+"s": 19.96,
+"e": 21.68
+}
+],
+[
+{
+"en": "Maybe we've all been this guy.",
+"s": 21.68,
+"e": 23.18
+}
+],
+[
+{
+"en": "Some people have a blamethrower.",
+"s": 23.18,
+"e": 24.59
+}
+],
+[
+{
+"en": "They just pass it on to everybody",
+"s": 25.34,
+"e": 27.83
+},
+{
+"en": "else and don't take responsibility",
+"s": 27.83,
+"e": 29.23
+},
+{
+"en": "for their actions,",
+"s": 29.23,
+"e": 29.91
+},
+{
+"en": "and again,",
+"s": 29.91,
+"e": 30.27
+},
+{
+"en": "hard to listen to somebody",
+"s": 30.27,
+"e": 31.41
+},
+{
+"en": "who is being like that.",
+"s": 31.41,
+"e": 32.41
+}
+],
+[
+{
+"en": "Penultimate, the sixth of the seven,",
+"s": 32.86,
+"e": 34.67
+},
+{
+"en": "embroidery, exaggeration.",
+"s": 35.26,
+"e": 37.79
+}
+],
+[
+{
+"en": "It demeans our language,",
+"s": 38.38,
+"e": 39.95
+},
+{
+"en": "actually, sometimes.",
+"s": 39.95,
+"e": 40.74
+}
+],
+[
+{
+"en": "For example,",
+"s": 40.74,
+"e": 41.51
+},
+{
+"en": "if I see something",
+"s": 41.51,
+"e": 42.41
+},
+{
+"en": "that really is awesome,",
+"s": 42.41,
+"e": 43.85
+},
+{
+"en": "what do I call it?",
+"s": 43.86,
+"e": 45.25
+}
+],
+[
+{
+"en": "And then,",
+"s": 47.86,
+"e": 48.65
+},
+{
+"en": "of course,",
+"s": 48.65,
+"e": 48.93
+},
+{
+"en": "this exaggeration becomes",
+"s": 48.93,
+"e": 50.35
+},
+{
+"en": "lying, and we don't want",
+"s": 51.06,
+"e": 52.27
+},
+{
+"en": "to listen to people",
+"s": 52.27,
+"e": 52.87
+},
+{
+"en": "we know are lying to us.",
+"s": 52.87,
+"e": 53.99
+}
+],
+[
+{
+"en": "And finally, dogmatism.",
+"s": 54.32,
+"e": 56.89
+}
+],
+[
+{
+"en": "The confusion of facts with opinions.",
+"s": 57.88,
+"e": 61.05
+}
+],
+[
+{
+"en": "When those two things get conflated,",
+"s": 61.1,
+"e": 63.33
+},
+{
+"en": "you're listening into the wind.",
+"s": 63.38,
+"e": 64.92
+}
+],
+[
+{
+"en": "You know,",
+"s": 64.92,
+"e": 65.25
+},
+{
+"en": "somebody is bombarding you with their opinions",
+"s": 65.25,
+"e": 67.07
+},
+{
+"en": "as if they were true.",
+"s": 67.07,
+"e": 67.9
+}
+],
+[
+{
+"en": "It's difficult to listen to that.",
+"s": 67.9,
+"e": 70.41
+}
+],
+[
+{
+"en": "So here they are,",
+"s": 70.42,
+"e": 71.69
+},
+{
+"en": "seven deadly sins of speaking.",
+"s": 71.98,
+"e": 73.98
+}
+],
+[
+{
+"en": "These are things I think we need",
+"s": 73.98,
+"e": 75.65
+},
+{
+"en": "to avoid.",
+"s": 75.65,
+"e": 76.24
+}
+]
+],
+"3": [
+[
+{
+"en": "But is there a positive way",
+"s": 0.8,
+"e": 2.81
+},
+{
+"en": "to think about this?",
+"s": 2.81,
+"e": 3.52
+}
+],
+[
+{
+"en": "Yes, there is.",
+"s": 3.52,
+"e": 4.89
+}
+],
+[
+{
+"en": "I'd like to suggest",
+"s": 4.9,
+"e": 6.53
+},
+{
+"en": "that there are four really powerful cornerstones,",
+"s": 6.53,
+"e": 9.57
+},
+{
+"en": "foundations, that we can stand on if we want",
+"s": 9.57,
+"e": 12.73
+},
+{
+"en": "our speech to be powerful",
+"s": 12.73,
+"e": 14.27
+},
+{
+"en": "and to make change in the world.",
+"s": 14.27,
+"e": 16.33
+}
+],
+[
+{
+"en": "Fortunately, these things spell a word.",
+"s": 17.2,
+"e": 19.09
+}
+],
+[
+{
+"en": "The word is \"hail,\"",
+"s": 19.09,
+"e": 20.37
+},
+{
+"en": "and it has a great definition",
+"s": 20.37,
+"e": 21.67
+},
+{
+"en": "as well.",
+"s": 21.67,
+"e": 22.31
+}
+],
+[
+{
+"en": "I'm not talking about the stuff",
+"s": 22.31,
+"e": 23.61
+},
+{
+"en": "that falls from the sky",
+"s": 23.61,
+"e": 24.55
+},
+{
+"en": "and hits you on the head.",
+"s": 24.55,
+"e": 25.5
+}
+],
+[
+{
+"en": "I'm talking about this definition,",
+"s": 25.5,
+"e": 27.25
+},
+{
+"en": "to greet or acclaim enthusiastically,",
+"s": 27.25,
+"e": 29.95
+},
+{
+"en": "which is how I think",
+"s": 29.95,
+"e": 30.53
+},
+{
+"en": "our words will be received",
+"s": 30.53,
+"e": 31.87
+},
+{
+"en": "if we stand on these four things.",
+"s": 31.87,
+"e": 33.57
+}
+],
+[
+{
+"en": "So what do they stand for?",
+"s": 33.57,
+"e": 34.77
+}
+],
+[
+{
+"en": "See if you can guess.",
+"s": 35.1,
+"e": 36.51
+}
+],
+[
+{
+"en": "The H,",
+"s": 36.88,
+"e": 37.83
+},
+{
+"en": "honesty, of course,",
+"s": 38.04,
+"e": 39.53
+},
+{
+"en": "being true in what you say,",
+"s": 40.02,
+"e": 41.75
+},
+{
+"en": "being straight and clear.",
+"s": 41.75,
+"e": 42.87
+}
+],
+[
+{
+"en": "The A is authenticity,",
+"s": 43.18,
+"e": 44.67
+},
+{
+"en": "just being yourself.",
+"s": 45.18,
+"e": 46.93
+}
+],
+[
+{
+"en": "A friend of mine",
+"s": 47.02,
+"e": 48.05
+},
+{
+"en": "described it as standing in your own",
+"s": 48.05,
+"e": 49.89
+},
+{
+"en": "truth, which I think",
+"s": 49.89,
+"e": 50.85
+},
+{
+"en": "is a lovely way to put it.",
+"s": 50.85,
+"e": 52.05
+}
+],
+[
+{
+"en": "The I is integrity,",
+"s": 52.22,
+"e": 53.79
+},
+{
+"en": "being your word,",
+"s": 54.22,
+"e": 55.31
+},
+{
+"en": "actually doing what you say,",
+"s": 55.31,
+"e": 56.59
+},
+{
+"en": "and being somebody people can trust.",
+"s": 56.59,
+"e": 58.41
+}
+],
+[
+{
+"en": "And the L is love.",
+"s": 58.78,
+"e": 61.27
+}
+],
+[
+{
+"en": "I don't mean romantic love,",
+"s": 61.66,
+"e": 63.55
+},
+{
+"en": "but I do mean wishing people well,",
+"s": 63.66,
+"e": 66.01
+},
+{
+"en": "for two reasons.",
+"s": 66.58,
+"e": 67.58
+}
+],
+[
+{
+"en": "First of all,",
+"s": 67.58,
+"e": 68.29
+},
+{
+"en": "I think absolute honesty",
+"s": 68.29,
+"e": 69.85
+},
+{
+"en": "may not be what we want.",
+"s": 69.85,
+"e": 70.8
+}
+],
+[
+{
+"en": "I mean,",
+"s": 70.8,
+"e": 71.13
+},
+{
+"en": "my goodness,",
+"s": 71.13,
+"e": 71.53
+},
+{
+"en": "you look ugly this morning.",
+"s": 71.53,
+"e": 72.81
+}
+],
+[
+{
+"en": "Perhaps that's not necessary.",
+"s": 74.26,
+"e": 76.13
+}
+],
+[
+{
+"en": "Tempered with love,",
+"s": 77.2,
+"e": 78.39
+},
+{
+"en": "of course,",
+"s": 78.39,
+"e": 78.81
+},
+{
+"en": "honesty is a great thing.",
+"s": 78.81,
+"e": 80.02
+}
+],
+[
+{
+"en": "But also,",
+"s": 80.02,
+"e": 81.03
+},
+{
+"en": "if you're really wishing somebody well,",
+"s": 81.04,
+"e": 83.17
+},
+{
+"en": "it's very hard to judge them",
+"s": 83.18,
+"e": 84.97
+},
+{
+"en": "at the same time.",
+"s": 84.97,
+"e": 85.85
+}
+],
+[
+{
+"en": "I'm not even sure",
+"s": 85.92,
+"e": 87.11
+},
+{
+"en": "you can do those two things simultaneously.",
+"s": 87.11,
+"e": 89.39
+}
+],
+[
+{
+"en": "So hail.",
+"s": 89.9,
+"e": 91.05
+}
+]
+],
+"4": [
+[
+{
+"en": "Also, now that's what you say,",
+"s": 0.8,
+"e": 2.71
+},
+{
+"en": "and it's like the old song,",
+"s": 2.71,
+"e": 3.71
+},
+{
+"en": "it is what you say,",
+"s": 3.71,
+"e": 4.51
+},
+{
+"en": "it's also the way",
+"s": 4.51,
+"e": 5.53
+},
+{
+"en": "that you say it.",
+"s": 5.53,
+"e": 6.04
+}
+],
+[
+{
+"en": "You have an amazing toolbox.",
+"s": 6.04,
+"e": 8.25
+}
+],
+[
+{
+"en": "This instrument is incredible,",
+"s": 8.25,
+"e": 9.83
+},
+{
+"en": "and yet this is a toolbox",
+"s": 9.83,
+"e": 11.41
+},
+{
+"en": "that very few people have ever opened.",
+"s": 11.41,
+"e": 13.25
+}
+],
+[
+{
+"en": "I'd like to have a little rummage in there",
+"s": 13.28,
+"e": 15.21
+},
+{
+"en": "with you now",
+"s": 15.21,
+"e": 15.93
+},
+{
+"en": "and just pull a few tools out",
+"s": 15.93,
+"e": 17.15
+},
+{
+"en": "that you might like to take away",
+"s": 17.15,
+"e": 18.31
+},
+{
+"en": "and play with,",
+"s": 18.31,
+"e": 18.91
+},
+{
+"en": "which will increase the power",
+"s": 18.98,
+"e": 20.49
+},
+{
+"en": "of your speaking.",
+"s": 20.49,
+"e": 21.23
+}
+],
+[
+{
+"en": "Register, for example.",
+"s": 22.1,
+"e": 23.53
+}
+],
+[
+{
+"en": "Now, falsetto register may",
+"s": 24.02,
+"e": 25.87
+},
+{
+"en": "not be very useful",
+"s": 25.87,
+"e": 26.77
+},
+{
+"en": "most of the time,",
+"s": 26.77,
+"e": 27.75
+},
+{
+"en": "but there's a register in between.",
+"s": 27.8,
+"e": 29.93
+}
+],
+[
+{
+"en": "I'm not going",
+"s": 29.93,
+"e": 30.71
+},
+{
+"en": "to get very technical",
+"s": 30.71,
+"e": 31.37
+},
+{
+"en": "about this for any of you who are voice coaches.",
+"s": 31.37,
+"e": 33.02
+}
+],
+[
+{
+"en": "You can locate your voice, however.",
+"s": 33.02,
+"e": 34.84
+}
+],
+[
+{
+"en": "So if I talk up",
+"s": 34.84,
+"e": 36.13
+},
+{
+"en": "here in my nose,",
+"s": 36.13,
+"e": 36.97
+},
+{
+"en": "you can hear the difference.",
+"s": 36.97,
+"e": 37.66
+}
+],
+[
+{
+"en": "If I go down",
+"s": 37.66,
+"e": 38.49
+},
+{
+"en": "here in my throat,",
+"s": 38.49,
+"e": 39.27
+},
+{
+"en": "which is where most of us speak",
+"s": 39.28,
+"e": 40.99
+},
+{
+"en": "from most of the time.",
+"s": 40.99,
+"e": 42.27
+}
+],
+[
+{
+"en": "But if you want weight,",
+"s": 42.6,
+"e": 44.33
+},
+{
+"en": "you need to go down here",
+"s": 44.42,
+"e": 46.03
+},
+{
+"en": "to the chest.",
+"s": 46.03,
+"e": 46.72
+}
+],
+[
+{
+"en": "You hear the difference?",
+"s": 46.72,
+"e": 47.87
+}
+],
+[
+{
+"en": "We vote for politicians with lower voices,",
+"s": 48.2,
+"e": 51.41
+},
+{
+"en": "it's true,",
+"s": 51.41,
+"e": 52.35
+},
+{
+"en": "because we associate depth with power",
+"s": 52.6,
+"e": 55.51
+},
+{
+"en": "and with authority.",
+"s": 55.51,
+"e": 57.39
+}
+],
+[
+{
+"en": "That's register.",
+"s": 58.16,
+"e": 59.43
+}
+],
+[
+{
+"en": "Then we have timbre.",
+"s": 60.1,
+"e": 61.17
+}
+],
+[
+{
+"en": "It's the way your voice feels.",
+"s": 61.28,
+"e": 62.86
+}
+],
+[
+{
+"en": "Again, the research shows",
+"s": 62.86,
+"e": 64.43
+},
+{
+"en": "that we prefer voices",
+"s": 64.43,
+"e": 65.41
+},
+{
+"en": "which are rich,",
+"s": 65.41,
+"e": 66.19
+},
+{
+"en": "smooth, warm,",
+"s": 66.34,
+"e": 67.99
+},
+{
+"en": "like hot chocolate.",
+"s": 67.99,
+"e": 69.63
+}
+],
+[
+{
+"en": "Well if that's not you,",
+"s": 70.18,
+"e": 71.77
+},
+{
+"en": "that's not the end of the world,",
+"s": 71.8,
+"e": 73.79
+},
+{
+"en": "because you can train.",
+"s": 73.79,
+"e": 75.13
+}
+],
+[
+{
+"en": "Go and get a voice coach.",
+"s": 75.24,
+"e": 76.4
+}
+],
+[
+{
+"en": "And there are amazing",
+"s": 76.4,
+"e": 77.71
+},
+{
+"en": "things you can do with breathing,",
+"s": 77.71,
+"e": 78.79
+},
+{
+"en": "with posture,",
+"s": 78.79,
+"e": 79.45
+},
+{
+"en": "and with exercises",
+"s": 79.45,
+"e": 80.65
+},
+{
+"en": "to improve the timbre of your voice.",
+"s": 80.65,
+"e": 82.83
+}
+]
+],
+"5": [
+[
+{
+"en": "Then prosody.",
+"s": 0.8,
+"e": 1.89
+}
+],
+[
+{
+"en": "I love prosody.",
+"s": 1.89,
+"e": 2.89
+}
+],
+[
+{
+"en": "This is the sing-song,",
+"s": 2.89,
+"e": 3.91
+},
+{
+"en": "the meta-language that we use in order",
+"s": 3.91,
+"e": 5.95
+},
+{
+"en": "to impart meaning.",
+"s": 5.95,
+"e": 7.04
+}
+],
+[
+{
+"en": "It's root one for meaning in conversation.",
+"s": 7.04,
+"e": 9.55
+}
+],
+[
+{
+"en": "People who speak",
+"s": 9.82,
+"e": 10.81
+},
+{
+"en": "all on one note",
+"s": 10.81,
+"e": 11.99
+},
+{
+"en": "are really quite hard to listen",
+"s": 11.99,
+"e": 13.75
+},
+{
+"en": "to if they don't have any prosody",
+"s": 13.75,
+"e": 15.55
+},
+{
+"en": "at all.",
+"s": 15.55,
+"e": 16.11
+}
+],
+[
+{
+"en": "That's where the word \"monotonic\" comes from,",
+"s": 16.28,
+"e": 19.23
+},
+{
+"en": "or monotonous, monotone.",
+"s": 19.23,
+"e": 21.01
+}
+],
+[
+{
+"en": "Also, we have repetitive",
+"s": 21.56,
+"e": 23.47
+},
+{
+"en": "prosody now coming in,",
+"s": 23.47,
+"e": 24.75
+},
+{
+"en": "where every sentence ends",
+"s": 24.75,
+"e": 26.37
+},
+{
+"en": "as if it were a question",
+"s": 26.37,
+"e": 27.33
+},
+{
+"en": "when it's actually not a question,",
+"s": 27.5,
+"e": 29.03
+},
+{
+"en": "it's a statement?",
+"s": 29.03,
+"e": 29.79
+}
+],
+[
+{
+"en": "And if you repeat",
+"s": 32.12,
+"e": 33.81
+},
+{
+"en": "that one,",
+"s": 33.81,
+"e": 34.11
+},
+{
+"en": "it's actually restricting your ability",
+"s": 34.46,
+"e": 36.37
+},
+{
+"en": "to communicate through prosody,",
+"s": 36.37,
+"e": 37.81
+},
+{
+"en": "which I think is a shame,",
+"s": 37.81,
+"e": 39.05
+},
+{
+"en": "so let's try",
+"s": 39.28,
+"e": 40.41
+},
+{
+"en": "and break that habit.",
+"s": 40.41,
+"e": 41.47
+}
+],
+[
+{
+"en": "Pace.",
+"s": 42.66,
+"e": 43.28
+}
+],
+[
+{
+"en": "I can get very excited",
+"s": 43.28,
+"e": 44.55
+},
+{
+"en": "by saying something really quickly,",
+"s": 44.55,
+"e": 45.81
+},
+{
+"en": "or I can slow right down",
+"s": 45.81,
+"e": 48.43
+},
+{
+"en": "to emphasize,",
+"s": 48.43,
+"e": 49.43
+},
+{
+"en": "and at the end of that,",
+"s": 50.14,
+"e": 51.39
+},
+{
+"en": "of course,",
+"s": 51.39,
+"e": 51.67
+},
+{
+"en": "is our old friend silence.",
+"s": 51.67,
+"e": 53.17
+}
+],
+[
+{
+"en": "There's nothing wrong",
+"s": 55.64,
+"e": 56.69
+},
+{
+"en": "with a bit",
+"s": 56.69,
+"e": 56.97
+},
+{
+"en": "of silence in a talk,",
+"s": 56.97,
+"e": 58.63
+},
+{
+"en": "is there?",
+"s": 58.63,
+"e": 59.07
+}
+],
+[
+{
+"en": "We don't have to fill it with ums",
+"s": 59.62,
+"e": 61.47
+},
+{
+"en": "and ahs.",
+"s": 61.47,
+"e": 62.51
+}
+],
+[
+{
+"en": "It can be very powerful.",
+"s": 62.9,
+"e": 64.41
+}
+],
+[
+{
+"en": "Of course,",
+"s": 65.02,
+"e": 65.85
+},
+{
+"en": "pitch often goes along",
+"s": 65.85,
+"e": 67.33
+},
+{
+"en": "with pace to indicate arousal,",
+"s": 67.33,
+"e": 68.69
+},
+{
+"en": "but you can do it just with pitch.",
+"s": 68.69,
+"e": 69.82
+}
+],
+[
+{
+"en": "Where did you leave my keys?",
+"s": 69.82,
+"e": 71.45
+}
+],
+[
+{
+"en": "Where did you leave my keys?",
+"s": 71.48,
+"e": 73.21
+}
+],
+[
+{
+"en": "So, slightly different",
+"s": 73.96,
+"e": 74.77
+},
+{
+"en": "meaning in those two deliveries.",
+"s": 74.77,
+"e": 77.07
+}
+],
+[
+{
+"en": "And finally, volume.",
+"s": 77.52,
+"e": 79.15
+}
+],
+[
+{
+"en": "I can get really excited",
+"s": 79.36,
+"e": 81.57
+},
+{
+"en": "by using volume.",
+"s": 81.57,
+"e": 83.35
+}
+],
+[
+{
+"en": "Sorry about that,",
+"s": 83.35,
+"e": 83.99
+},
+{
+"en": "if I startled anybody.",
+"s": 83.99,
+"e": 85.01
+}
+],
+[
+{
+"en": "Or, I can have you really pay",
+"s": 85.16,
+"e": 87.27
+},
+{
+"en": "attention by getting very quiet.",
+"s": 87.27,
+"e": 89.11
+}
+],
+[
+{
+"en": "Some people broadcast the whole time.",
+"s": 89.76,
+"e": 92.05
+}
+],
+[
+{
+"en": "Try not to do that.",
+"s": 92.05,
+"e": 93.37
+}
+],
+[
+{
+"en": "That's called sodcasting,",
+"s": 93.37,
+"e": 95.01
+},
+{
+"en": "Imposing your sound on people",
+"s": 96.78,
+"e": 98.83
+},
+{
+"en": "around you carelessly and inconsiderately.",
+"s": 98.83,
+"e": 101.32
+}
+],
+[
+{
+"en": "Not nice.",
+"s": 101.32,
+"e": 102.17
+}
+]
+],
+"6": [
+[
+{
+"en": "Of course,",
+"s": 0.8,
+"e": 1.73
+},
+{
+"en": "where this all comes",
+"s": 1.73,
+"e": 2.61
+},
+{
+"en": "into play most of all is when you've",
+"s": 2.61,
+"e": 4.37
+},
+{
+"en": "got something really important to do.",
+"s": 4.37,
+"e": 5.6
+}
+],
+[
+{
+"en": "It might be standing on a stage",
+"s": 5.6,
+"e": 7.01
+},
+{
+"en": "like this and giving a talk",
+"s": 7.01,
+"e": 8.27
+},
+{
+"en": "to people.",
+"s": 8.27,
+"e": 8.54
+}
+],
+[
+{
+"en": "It might be proposing marriage,",
+"s": 8.54,
+"e": 10.31
+},
+{
+"en": "asking for a raise,",
+"s": 10.31,
+"e": 12.53
+},
+{
+"en": "a wedding speech.",
+"s": 12.53,
+"e": 14.34
+}
+],
+[
+{
+"en": "Whatever it is,",
+"s": 14.34,
+"e": 15.37
+},
+{
+"en": "if it's really important,",
+"s": 15.37,
+"e": 16.69
+},
+{
+"en": "you owe it to yourself",
+"s": 16.69,
+"e": 17.77
+},
+{
+"en": "to look at this toolbox",
+"s": 17.77,
+"e": 19.71
+},
+{
+"en": "and the engine",
+"s": 19.71,
+"e": 21.05
+},
+{
+"en": "that it's going to work on,",
+"s": 21.05,
+"e": 22.31
+},
+{
+"en": "and no engine works well",
+"s": 22.31,
+"e": 23.45
+},
+{
+"en": "without being warmed up.",
+"s": 23.45,
+"e": 24.48
+}
+],
+[
+{
+"en": "Warm up your voice.",
+"s": 24.48,
+"e": 26.47
+}
+],
+[
+{
+"en": "Actually, let me show",
+"s": 27.1,
+"e": 28.61
+},
+{
+"en": "you how to do that.",
+"s": 28.61,
+"e": 29.1
+}
+],
+[
+{
+"en": "Would you all like to stand up",
+"s": 29.1,
+"e": 30.53
+},
+{
+"en": "for a moment?",
+"s": 30.53,
+"e": 31.49
+}
+],
+[
+{
+"en": "I'm going to show",
+"s": 32.02,
+"e": 33.05
+},
+{
+"en": "you the six vocal warm-up exercises",
+"s": 33.05,
+"e": 34.93
+},
+{
+"en": "that I do before",
+"s": 34.93,
+"e": 36.67
+},
+{
+"en": "every talk I ever do.",
+"s": 36.67,
+"e": 38.17
+}
+],
+[
+{
+"en": "Any time you're going",
+"s": 39.06,
+"e": 39.61
+},
+{
+"en": "to talk to anybody important,",
+"s": 39.61,
+"e": 40.53
+},
+{
+"en": "do these.",
+"s": 40.53,
+"e": 41.2
+}
+],
+[
+{
+"en": "First, arms up,",
+"s": 41.2,
+"e": 42.47
+},
+{
+"en": "deep breath in,",
+"s": 42.72,
+"e": 44.35
+},
+{
+"en": "and sigh out,",
+"s": 44.42,
+"e": 45.79
+},
+{
+"en": "ahhhhh, like that.",
+"s": 45.79,
+"e": 47.24
+}
+],
+[
+{
+"en": "One more time.",
+"s": 47.24,
+"e": 48.21
+}
+],
+[
+{
+"en": "Ahhhh, very good.",
+"s": 50.66,
+"e": 51.59
+}
+],
+[
+{
+"en": "Now we're going",
+"s": 51.59,
+"e": 52.35
+},
+{
+"en": "to warm up our lips,",
+"s": 52.35,
+"e": 53.79
+},
+{
+"en": "and we're going to go Ba,",
+"s": 53.79,
+"e": 54.99
+},
+{
+"en": "Ba, Ba,",
+"s": 54.99,
+"e": 54.41
+},
+{
+"en": "Ba, Ba,",
+"s": 54.41,
+"e": 54.74
+},
+{
+"en": "Ba, Ba, Ba.",
+"s": 54.74,
+"e": 55.09
+}
+],
+[
+{
+"en": "Very good.",
+"s": 57.88,
+"e": 58.84
+}
+],
+[
+{
+"en": "And now,",
+"s": 58.84,
+"e": 60.53
+},
+{
+"en": "brrrrrrrrrr, just like when you were a kid.",
+"s": 62.34,
+"e": 63.85
+}
+],
+[
+{
+"en": "Brrrr.",
+"s": 63.85,
+"e": 64.32
+}
+],
+[
+{
+"en": "Now your lips should be coming alive.",
+"s": 64.32,
+"e": 66.43
+}
+],
+[
+{
+"en": "We're going to do the tongue next",
+"s": 66.43,
+"e": 67.95
+},
+{
+"en": "with exaggerated la,",
+"s": 67.95,
+"e": 69.39
+},
+{
+"en": "la, la,",
+"s": 69.39,
+"e": 68.62
+},
+{
+"en": "la, la,",
+"s": 68.62,
+"e": 68.96
+},
+{
+"en": "la, la,",
+"s": 68.96,
+"e": 69.3
+},
+{
+"en": "la, la.",
+"s": 69.3,
+"e": 69.49
+}
+],
+[
+{
+"en": "Beautiful.",
+"s": 72.52,
+"e": 73.21
+}
+],
+[
+{
+"en": "You're getting really good at this.",
+"s": 73.21,
+"e": 74.32
+}
+],
+[
+{
+"en": "And then,",
+"s": 74.32,
+"e": 74.75
+},
+{
+"en": "roll an R.",
+"s": 74.75,
+"e": 75.59
+}
+],
+[
+{
+"en": "Rrrrrrr.",
+"s": 75.59,
+"e": 77.64
+}
+],
+[
+{
+"en": "That's like champagne for the tongue.",
+"s": 77.64,
+"e": 79.57
+}
+],
+[
+{
+"en": "Finally, and if I can only do one,",
+"s": 79.84,
+"e": 82.07
+},
+{
+"en": "the pros call this the siren.",
+"s": 82.2,
+"e": 83.88
+}
+],
+[
+{
+"en": "It's really good.",
+"s": 83.88,
+"e": 84.81
+}
+],
+[
+{
+"en": "It starts with \"we\" and goes",
+"s": 84.81,
+"e": 86.39
+},
+{
+"en": "to \"aw.\"",
+"s": 86.39,
+"e": 86.51
+}
+],
+[
+{
+"en": "The \"we\" is high,",
+"s": 86.51,
+"e": 87.37
+},
+{
+"en": "the \"aw\" is low.",
+"s": 87.37,
+"e": 87.94
+}
+],
+[
+{
+"en": "So you go,",
+"s": 87.94,
+"e": 88.51
+},
+{
+"en": "weeeaawww, weeeaawww.",
+"s": 88.51,
+"e": 88.61
+}
+],
+[
+{
+"en": "Fantastic.",
+"s": 94.58,
+"e": 95.22
+}
+],
+[
+{
+"en": "Give yourselves a round of applause.",
+"s": 95.22,
+"e": 96.55
+}
+],
+[
+{
+"en": "Take a seat,",
+"s": 96.55,
+"e": 97.11
+},
+{
+"en": "thank you.",
+"s": 97.11,
+"e": 97.63
+}
+],
+[
+{
+"en": "Next time you speak,",
+"s": 99.16,
+"e": 100.51
+},
+{
+"en": "do those in advance.",
+"s": 100.51,
+"e": 101.9
+}
+],
+[
+{
+"en": "Now let me just put",
+"s": 101.9,
+"e": 103.15
+},
+{
+"en": "this in context to close.",
+"s": 103.15,
+"e": 104.53
+}
+],
+[
+{
+"en": "This is a serious point here.",
+"s": 104.66,
+"e": 106.75
+}
+],
+[
+{
+"en": "This is where we are now, right?",
+"s": 107.12,
+"e": 108.8
+}
+],
+[
+{
+"en": "We speak not very well to people",
+"s": 108.8,
+"e": 111.07
+},
+{
+"en": "who simply aren't",
+"s": 111.07,
+"e": 111.71
+},
+{
+"en": "listening in an environment",
+"s": 111.71,
+"e": 112.87
+},
+{
+"en": "that's all about noise and bad acoustics.",
+"s": 112.87,
+"e": 114.81
+}
+],
+[
+{
+"en": "I have talked",
+"s": 114.81,
+"e": 115.85
+},
+{
+"en": "about that on this stage in different phases.",
+"s": 115.85,
+"e": 118.32
+}
+],
+[
+{
+"en": "What would the world",
+"s": 118.32,
+"e": 119.47
+},
+{
+"en": "be like if we were speaking powerfully",
+"s": 119.47,
+"e": 121.85
+},
+{
+"en": "to people who were listening",
+"s": 121.85,
+"e": 123.19
+},
+{
+"en": "consciously in environments",
+"s": 123.19,
+"e": 125.03
+},
+{
+"en": "which were actually fit for purpose?",
+"s": 125.03,
+"e": 126.93
+}
+],
+[
+{
+"en": "Or to make",
+"s": 126.96,
+"e": 127.99
+},
+{
+"en": "that a bit larger,",
+"s": 127.99,
+"e": 128.87
+},
+{
+"en": "what would the world",
+"s": 129.86,
+"e": 130.99
+},
+{
+"en": "be like if we were creating",
+"s": 130.99,
+"e": 132.35
+},
+{
+"en": "sound consciously and consuming sound consciously",
+"s": 132.35,
+"e": 135.77
+},
+{
+"en": "and designing all our environments consciously",
+"s": 135.77,
+"e": 138.39
+},
+{
+"en": "for sound?",
+"s": 138.39,
+"e": 138.93
+}
+],
+[
+{
+"en": "That would be a world",
+"s": 138.93,
+"e": 140.23
+},
+{
+"en": "that does sound beautiful,",
+"s": 140.23,
+"e": 141.61
+},
+{
+"en": "and one where understanding",
+"s": 141.61,
+"e": 143.67
+},
+{
+"en": "would be the norm,",
+"s": 143.67,
+"e": 145.73
+},
+{
+"en": "and that is an idea worth spreading.",
+"s": 145.88,
+"e": 148.59
+}
+],
+[
+{
+"en": "Thank you.",
+"s": 148.64,
+"e": 149.65
+}
+]
+]
+}
 }

@@ -1,6 +1,9 @@
 # TEDリスニング再生
 
-Tim Urban の TED トーク「Inside the Mind of a Master Procrastinator」を、1文ずつ字幕つきで繰り返し聴くためのページ。
+TED トークを、1文ずつ字幕つきで繰り返し聴くためのページ。上の「トーク」で切り替える。
+
+- Tim Urban「Inside the Mind of a Master Procrastinator」（5区間）
+- Julian Treasure「How to speak so that people want to listen」（6区間・2026-10-24 追加。アカデミック・ライティングの TED 課題で選んだもの）
 tatsuki の英語リスニング練習用（法政大学2年・2026秋）。
 
 **https://tatsuki816.github.io/ted-listening/**
@@ -11,6 +14,7 @@ tatsuki の英語リスニング練習用（法政大学2年・2026秋）。
 - 繰り返し：流す／1文／A–B（範囲）／区間まるごと
 - 字幕：なし（英文をぼかす）／英／日／英日。「今の文を見る」で1文だけ開ける
 - 速さ 0.6／0.7／0.85／1倍、繰り返しの間 なし／1.5秒／3秒／自動（聞いた長さ＋0.8秒）
+- 間の途中は再生ボタンの横に残り秒数が出る（止まったのか間なのか分かるように。2026-10-24）
 - **シャドーイングの4段階**（2026-10-13 追加）。いきなり音にかぶせると聞き取れず意味も追えないので、意味を先に入れてから音に近づける
   - ① 意味：英日の字幕で1文ずつ止まる
   - ② リピート：3〜6語のかたまりごとに止まり、その間に言い返す。今のかたまりが光る
@@ -25,15 +29,28 @@ tatsuki の英語リスニング練習用（法政大学2年・2026秋）。
 
 | ファイル | 役割 |
 |---|---|
-| `雛形.html` | ページの本体。`__DATA__` に字幕が入る |
-| `訳.py` | 132文の日本語訳 |
-| `組み立て.py` | 雛形に字幕とかたまりを流し込んで `index.html` を作る |
+| `雛形.html` | ページの本体。`__DATA__` に字幕が入る（`{トーク名: {話者, 題, 年, wpm, 出典, 音声, 区間}}`） |
+| `訳.py` | Tim Urban の132文の日本語訳 |
+| `トーク/treasure/` | Julian Treasure の文ごとのデータ・単語の時刻・訳（`訳.py`） |
+| `トーク準備.py` | 新しいトークの下ごしらえ。英文を文に割り、全体の音声で時刻を合わせ、区間ごとに音声を切る |
+| `組み立て.py` | 雛形に字幕とかたまりを流し込んで `index.html` を作る。トークはここの `トーク` に並べる |
 | `かたまり.py` | 1文を言い返せる長さのかたまりに区切り、時刻を付けて `かたまり.json` を書く。`--見る` で区切りを全部表示 |
 | `単語の時刻/` | whisper の単語ごとの時刻（かたまり.py の下ごしらえ）。音声を切り直したら消して回し直す |
 | `sw.js` | 圏外対応。音声は Range 要求に 206 で返す（Safari の `<audio>` はこれが無いと再生できない） |
-| `audio/1〜5.mp3` | 区間ごとの音声 |
+| `audio/1〜5.mp3` | Tim Urban の区間ごとの音声 |
+| `audio/treasure/1〜6.mp3` | Julian Treasure の区間ごとの音声 |
 
 字幕の時刻と英文は Obsidian の vault の `法政大学2年/英語ライティング/リスニング/データ/` から読む（書き取りツール `書き取り.py` と同じデータ）。
+
+## トークを足すとき
+
+1. `元データ_<名>/` に材料を置く（gitignore 済み）
+   - `全体.mp3`：TED のページの HTML にある `py.tedcdn.com/...mp4` を curl で取って ffmpeg で音声だけ抜く。YouTube は yt-dlp が 403、ted.com を yt-dlp に渡すと落ちた（2026-10-24）
+   - `transcript.json`：`/transcript?language=en` のページの `__NEXT_DATA__` の `transcriptData.translation.paragraphs[].cues`
+2. `トーク準備.py` の `区間の割り方` に区間の切れ目を書いて、`~/音声入力/.venv/bin/python3 トーク準備.py <名>` で確認、`--書く` で書く
+3. `トーク/<名>/訳.py` に日本語訳を書く（区間ごとに文の数をそろえる）
+4. `かたまり.py` と `組み立て.py` の `トーク` に足して、両方回す
+5. 下の「直すとき」の3〜4
 
 ## 直すとき
 
@@ -64,8 +81,9 @@ push は個人アカウント `tatsuki816` の HTTPS で行う（この Mac の 
 
 ## 出典とライセンス
 
-音声と英文字幕：Tim Urban, "Inside the Mind of a Master Procrastinator", TED 2016。
-<https://www.ted.com/talks/tim_urban_inside_the_mind_of_a_master_procrastinator>
+音声と英文字幕：
+- Tim Urban, "Inside the Mind of a Master Procrastinator", TED 2016。<https://www.ted.com/talks/tim_urban_inside_the_mind_of_a_master_procrastinator>
+- Julian Treasure, "How to speak so that people want to listen", TEDGlobal 2013。<https://www.ted.com/talks/julian_treasure_how_to_speak_so_that_people_want_to_listen>
 TED Talks は CC BY-NC-ND 4.0。個人の学習用に非営利で置いている。日本語訳は学習用に独自に付けたもの。
 
 現役（2026-09〜）。
