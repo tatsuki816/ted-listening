@@ -98,13 +98,13 @@
 {
 "en": "That would be the plan.",
 "s": 26.26,
-"e": 27.63
+"e": 27.26
 }
 ],
 [
 {
 "en": "I would have it all ready",
-"s": 27.56,
+"s": 27.26,
 "e": 30.11
 },
 {
@@ -307,7 +307,7 @@
 [
 {
 "en": "And then --",
-"s": 80.94,
+"s": 80.6,
 "e": 81.43
 },
 {
@@ -720,14 +720,14 @@
 [
 {
 "en": "Now ...",
-"s": 33.9,
-"e": 34.38
+"s": 33.46,
+"e": 34.04
 }
 ],
 [
 {
 "en": "here's my brain.",
-"s": 34.38,
+"s": 34.04,
 "e": 35.67
 }
 ],
@@ -783,16 +783,16 @@
 {
 "en": "[This is a perfect time",
 "s": 57.64,
-"e": 59.1
+"e": 59.07
 },
 {
 "en": "to get some work done.] [Nope!]",
-"s": 59.1,
-"e": 60.67
+"s": 59.07,
+"e": 60.6
 },
 {
 "en": "So the Rational Decision-Maker",
-"s": 60.67,
+"s": 60.6,
 "e": 59.63
 },
 {
@@ -843,13 +843,13 @@
 {
 "en": "that that happened.",
 "s": 72.58,
-"e": 73.59
+"e": 73.22
 }
 ],
 [
 {
 "en": "Then --",
-"s": 76.88,
+"s": 73.22,
 "e": 75.13
 },
 {
@@ -875,13 +875,13 @@
 {
 "en": "since 10 minutes ago.",
 "s": 80.01,
-"e": 81.15
+"e": 80.78
 }
 ],
 [
 {
 "en": "After that,",
-"s": 81.66,
+"s": 80.78,
 "e": 82.71
 },
 {
@@ -1339,13 +1339,13 @@
 {
 "en": "there know very well.",
 "s": 55.59,
-"e": 57.34
+"e": 56.86
 }
 ],
 [
 {
 "en": "It's where leisure activities happen at times",
-"s": 57.3,
+"s": 56.86,
 "e": 59.57
 },
 {
@@ -3190,14 +3190,14 @@
 [
 {
 "en": "The confusion of facts with opinions.",
-"s": 57.88,
-"e": 61.05
+"s": 57.5,
+"e": 60.7
 }
 ],
 [
 {
 "en": "When those two things get conflated,",
-"s": 61.1,
+"s": 60.7,
 "e": 63.33
 },
 {
@@ -3227,13 +3227,13 @@
 {
 "en": "It's difficult to listen to that.",
 "s": 67.9,
-"e": 70.41
+"e": 70.04
 }
 ],
 [
 {
 "en": "So here they are,",
-"s": 70.42,
+"s": 70.04,
 "e": 71.69
 },
 {
@@ -3523,7 +3523,7 @@
 [
 {
 "en": "Perhaps that's not necessary.",
-"s": 74.26,
+"s": 73.3,
 "e": 76.13
 }
 ],
@@ -3824,13 +3824,13 @@
 {
 "en": "Then we have timbre.",
 "s": 60.1,
-"e": 61.17
+"e": 60.8
 }
 ],
 [
 {
 "en": "It's the way your voice feels.",
-"s": 61.28,
+"s": 60.8,
 "e": 62.86
 }
 ],
@@ -3875,13 +3875,13 @@
 {
 "en": "because you can train.",
 "s": 73.79,
-"e": 75.13
+"e": 74.78
 }
 ],
 [
 {
 "en": "Go and get a voice coach.",
-"s": 75.24,
+"s": 74.78,
 "e": 76.4
 }
 ],
